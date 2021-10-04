@@ -1,4 +1,4 @@
-# `cite-write`
+# Citable scholarly work in Julia
 
 A hands-on introduction to working with the CITE architecture in Julia.
 
