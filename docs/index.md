@@ -1,5 +1,12 @@
 # `cite-write`
 
+A hands-on introduction to working with the CITE architecture in Julia.
+
+
+![Color key](./colorkey.png)
+
+![Modules graph](./modules-tikz.png)
+
 ## Introduction
 
 - introductory text with embedded code examples: TBA
