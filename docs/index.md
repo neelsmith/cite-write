@@ -14,7 +14,12 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 ## Documentation
 
+- the [`CitableBase` module](https://cite-architecture.github.io/CitableBase.jl/stable/)
 - the [`CitableText` module](https://cite-architecture.github.io/CitableText.jl/stable/)
+- the [`CitableCorpus` module](https://cite-architecture.github.io/CitableCorpus.jl/stable/)
+- the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/)
+- the [`CitableParserBuilder` module](https://neelsmith.github.io/CitableParserBuilder.jl/stable/)
+- the [`CitableCorpusAnalysis` module](https://github.com/neelsmith/CitableCorpusAnalysis.jl)
 
 ## Some Pluto notebooks
 
