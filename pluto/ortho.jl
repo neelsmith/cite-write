@@ -52,7 +52,7 @@ Use the `validstring` function to determine whether a given string is valid in a
 """
 
 # ╔═╡ d4f64a2a-bfc8-48f2-8eef-3d04ddf3450f
-sentence = "Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal"
+sentence = "Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal."
 
 # ╔═╡ b5c6887a-1fc5-4bf6-9100-353340740cfe
 validstring(ortho, sentence)
@@ -106,16 +106,25 @@ Next we illustrate:
 """
 
 # ╔═╡ a68ec67f-ad71-4399-8b31-72455611023e
-tokenize(ortho, corpus)
+corpustokens = tokenize(ortho, corpus)
+
+# ╔═╡ 295b913c-cae0-450d-ae31-0466b0e1d556
+length(corpustokens)
 
 # ╔═╡ 06aee572-4035-4678-b677-c7f63addcefe
-tokenize(ortho, corpus.passages[1])
+passagetokens = tokenize(ortho, corpus.passages[1])
+
+# ╔═╡ 77991366-4377-4044-b307-1efb3f85c9c7
+length(passagetokens)
 
 # ╔═╡ 75cfa577-404b-4435-a437-8562646e7e07
-begin
+doctokens = begin
 	docs = documents(corpus)
 	tokenize(ortho, docs[1])
 end
+
+# ╔═╡ 6af33eec-b481-4693-9ccb-887197d4403c
+length(doctokens)
 
 # ╔═╡ 4ca385f5-082b-4466-87a2-219870eb0880
 md"""
@@ -143,7 +152,7 @@ Orthography = "0b4c9448-09b0-4e78-95ea-3eb3328be36d"
 [compat]
 CitableCorpus = "~0.6.0"
 HTTP = "~0.9.16"
-Orthography = "~0.12.3"
+Orthography = "~0.13.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -172,9 +181,9 @@ uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
 [[CSV]]
 deps = ["CodecZlib", "Dates", "FilePathsBase", "InlineStrings", "Mmap", "Parsers", "PooledArrays", "SentinelArrays", "Tables", "Unicode", "WeakRefStrings"]
-git-tree-sha1 = "15b18ea098a4b5af316df529c2ff4055fcef36e9"
+git-tree-sha1 = "567d865fc5702dc094e4519daeab9e9d44d66c63"
 uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-version = "0.9.5"
+version = "0.9.6"
 
 [[CitableBase]]
 deps = ["DocStringExtensions", "Documenter", "Test"]
@@ -406,9 +415,9 @@ version = "1.4.1"
 
 [[Orthography]]
 deps = ["CitableCorpus", "CitableText", "DocStringExtensions", "Documenter", "OrderedCollections", "StatsBase", "Test", "TypedTables", "Unicode"]
-git-tree-sha1 = "7e03fe7a74bb90dd4e22acc40bcf75d7d2443029"
+git-tree-sha1 = "7e969e35d937bb7fbd49c6d1c141694aa3bd773e"
 uuid = "0b4c9448-09b0-4e78-95ea-3eb3328be36d"
-version = "0.12.3"
+version = "0.13.0"
 
 [[Parsers]]
 deps = ["Dates"]
@@ -428,9 +437,9 @@ version = "1.3.0"
 
 [[PrettyTables]]
 deps = ["Crayons", "Formatting", "Markdown", "Reexport", "Tables"]
-git-tree-sha1 = "8ee6a9f7bcb634f37e91adab63c116b4f04777ad"
+git-tree-sha1 = "69fd065725ee69950f3f58eceb6d144ce32d627d"
 uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
-version = "1.2.1"
+version = "1.2.2"
 
 [[Printf]]
 deps = ["Unicode"]
@@ -585,8 +594,11 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─abc7db81-d566-4e75-b55d-b3e399e16fd3
 # ╟─6175cbb4-b833-4965-b01d-8a2dbceb5d2e
 # ╠═a68ec67f-ad71-4399-8b31-72455611023e
+# ╠═295b913c-cae0-450d-ae31-0466b0e1d556
 # ╠═06aee572-4035-4678-b677-c7f63addcefe
+# ╠═77991366-4377-4044-b307-1efb3f85c9c7
 # ╠═75cfa577-404b-4435-a437-8562646e7e07
+# ╠═6af33eec-b481-4693-9ccb-887197d4403c
 # ╟─4ca385f5-082b-4466-87a2-219870eb0880
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
