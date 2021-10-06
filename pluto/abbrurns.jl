@@ -30,7 +30,7 @@ The `CitableParserBuilder` module defines four types that implement the `Abbrevi
 # ╔═╡ 7ea935d3-3130-4d39-af27-3ff765510688
 
 md"""
-Consider a brief example of an indentifier for a morphological form.
+Consider a brief example of an identifier for a morphological form.  It is a subtype of `AbbreviatedUrn`.
 """
 
 
@@ -39,30 +39,27 @@ Consider a brief example of an indentifier for a morphological form.
 abbreviated_form = FormUrn("morphforms.1000000001")
 
 # ╔═╡ 62c5891c-fadd-4042-b7f6-a0fa424eea86
-typeof(abbreviated_form)
+typeof(abbreviated_form) |> supertype
 
 # ╔═╡ 080b2032-0e82-4e45-a4ff-d5044c9abb16
 md"""
-If we want to expand the abbreviated form into a full CITE2 URN, we need a dictionary mapping collection names to full URN values for the collection.
+If we want to expand the abbreviated form into a full CITE2 URN, we need a dictionary that maps collection names to strings with the full URN identifier for the collection.
 """
 
 # ╔═╡ 5820c8f7-f8e2-46b0-a874-54dabf156b2f
-registry = Dict(
+collection_registry = Dict(
     "morphforms" => "urn:cite2:kanones:morphforms.v1:"
 )
 
-
-
 # ╔═╡ 756b7132-aac8-4936-92c2-3d361e57337e
-
-expanded = expand(abbreviated_form, registry)
+expanded = expand(abbreviated_form, collection_registry)
 
 # ╔═╡ 7e1e930c-ce76-4ace-b89e-09aa52b65752
 typeof(expanded)
 
 # ╔═╡ af08f6b5-1833-4107-bc79-f4c0e48a5fa1
 md"""
-There is a parallel `abbreviate` function, but note that it returns a string value. You can use that value in the constructor to any type of `AbbreviatedUrn` type. 
+There is a parallel `abbreviate` function, but note that it returns a string value. You can use that value in the constructor to any AbbreviatedUrn` type. 
 """
 
 # ╔═╡ 246fed26-ac9b-448a-8201-311a5c8cba8f
@@ -73,6 +70,14 @@ roundtripped = FormUrn(abbr_string)
 
 # ╔═╡ a386735c-56a3-40e1-a333-12b3cb689192
 typeof(roundtripped)
+
+# ╔═╡ 1b667140-33bc-4a41-a688-0466dd3ad64b
+md"""
+The newly created abbreviated URN is identical to the original one.
+"""
+
+# ╔═╡ 7a9eafe1-d835-4acd-b159-7d8ccb2a09c7
+roundtripped == abbreviated_form
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -524,5 +529,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═246fed26-ac9b-448a-8201-311a5c8cba8f
 # ╠═c34939cf-7c9c-421f-897f-241b113c6d28
 # ╠═a386735c-56a3-40e1-a333-12b3cb689192
+# ╟─1b667140-33bc-4a41-a688-0466dd3ad64b
+# ╠═7a9eafe1-d835-4acd-b159-7d8ccb2a09c7
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
