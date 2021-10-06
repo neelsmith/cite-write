@@ -7,6 +7,13 @@ using InteractiveUtils
 # ╔═╡ da50a6c9-699a-48cf-976c-50cd55aed91d
 using CitableText, CitableCorpus
 
+# ╔═╡ a789c96c-bb16-40ed-8c76-c4ae8e7af262
+corpuscex = begin
+	using HTTP
+	corpusurl = "https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex"
+	HTTP.get(corpusurl).body |> String
+end
+
 # ╔═╡ f81b2eb8-25fb-11ec-0910-4911df54f93f
 md"""
 # Working with citable texts
@@ -14,44 +21,185 @@ md"""
 This notebook introduces three structures defined in the `CitableCorpus` library:
 
 1. the `CitablePassage`, a kind of  `Citable` object that  pairs a CTS URN with a string of text content
-2. the `CitableDocument`, a kind of  `Citable` object including a sequence of `CitablePassage`s.  The document's identifying URN is a CTS URN that, in URN logic, contains all of its citable passages
-3. the `CitableCorpus`, a sequence of `CitablePassage`s that can be resolved to one or more `CitableDocument`s.
+1. the `CitableCorpus`, a sequence of `CitablePassage`s.
+1. the `CitableDocument`, a kind of  `Citable` object including a sequence of `CitablePassage`s.  The document's identifying URN is a CTS URN that, in URN logic, contains all of its citable passages.
 """
+
+# ╔═╡ 23a92e23-de00-4da3-a2f7-9e8075f55c81
+md"""
+## 1. Citable passages
+
+A *citable passage* associates an identifying CTS URN with a text string.  You can manually construct them, as in the following cell.
+"""
+
+# ╔═╡ 445b507d-5644-4c4b-b908-7c7c0a361795
+psg1 = CitablePassage(
+		 CtsUrn("urn:cts:citedemo:gburg.bancroft.v2:1"), 
+		 "Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal."
+	)
+
+
+# ╔═╡ 6b00dceb-2efd-49e2-9443-8158c39db541
+md"""
+You can also create a passage from a delimited text string.  If you use the default delimiter (the vertical pipe `|`), you only need to provide one parameter to the `passage_fromcex` function.
+"""
+
+# ╔═╡ c48d3947-c201-4449-8e3a-4b39bfa06f0e
+psgcex = "urn:cts:citedemo:gburg.bancroft.v2:1|Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal."
+
+# ╔═╡ cab41c17-d0aa-4727-85cd-2ae6a5a04f30
+psg2 = CitableCorpus.passage_fromcex(psgcex)
+
+# ╔═╡ 8dc0fc0e-b9df-4186-96ae-2c6a3673d770
+md"The results are equivalent:"
+
+# ╔═╡ cad62b5d-d7fb-4ba5-b39f-6c8fdbe918ff
+psg1 == psg2
 
 # ╔═╡ 21f9c59e-f611-4beb-811a-81a4f1282d0a
 md"""
-## Loading citable texts from delimited-text sources
+## 2. Citable text corpora
 """
 
 # ╔═╡ 4cc27d15-f568-4707-b4cb-03e606ab2629
-psgcex = "urn:cts:citedemo:gburg.bancroft.v2:1|Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal."
+md"""
+A *citable corpus* is simply a list of citable passages. We could create them manually, or read them from the `ctsdata` block of a CEX source. The following cells use a `ctsdata` block with a single line of delimited text, identical to the text we used above to create an individual passage.  The corpus built from this source comprises only one citable passage.
+"""
 
 # ╔═╡ d8e0bd00-b705-4a4b-a333-7fe5f5e33fc5
-CitableCorpus.passage_fromcex(psgcex)
+tinycex = """#!ctsdata
+urn:cts:citedemo:gburg.bancroft.v2:1|Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
+"""
 
-# ╔═╡ 52176177-fe97-44a6-9c9f-9e45d9359282
-corpusurl = "https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex"
+# ╔═╡ 98a9d7a7-563a-4269-bd1a-1a5a9b241bd0
+tinycorpus = corpus_fromcex(tinycex)
 
-# ╔═╡ a789c96c-bb16-40ed-8c76-c4ae8e7af262
-corpuscex = begin
-	using HTTP
-	HTTP.get(corpusurl).body |> String
-end
+# ╔═╡ 303d23de-bcf8-47fc-b7f6-45f7216baf15
+md"""
+The citable content is in the `passages` member of the corpus, which is simply a Vector of `CitablePassage`s.
+"""
+
+# ╔═╡ d300906a-07f9-430d-b26c-0fc8583282ac
+tinycorpus.passages
+
+# ╔═╡ 2ee1c952-4f0f-4f2e-bb4b-2ae728cdf631
+tinycorpus.passages[1].urn
+
+# ╔═╡ 06de49f4-0b91-42fa-8057-bab9aaa21697
+tinycorpus.passages[1].text
+
+# ╔═╡ 0011163c-b486-4507-915e-b62950fe2650
+md"""
+### Example: loading the Gettysburg Address from a URL
+
+
+Normally, you'll want to load a corpus from a local or remote file.  Since the `corpus_fromcex` function takes a String as its argument, we can use normal Julia IO to read data from a file or a URL into a String, and pass that to `corpus_fromcex`.
+
+The following cells illustrates this:  the first one reads the body of a URL as a String; the following cell instantiates a corpus of the five extant texts of Lincoln's Gettysburg Address.  Our corpus comprises 20 citable passages in 5 documents.
+"""
 
 # ╔═╡ c479dce8-4183-4097-a73f-8d8e2cf5be47
 corpus = corpus_fromcex(corpuscex)
 
+# ╔═╡ 64407ce2-5565-409f-a38c-b49037ac16f7
+md"""
+We can work directly with the Vector of passages.
+"""
+
+# ╔═╡ 3e74280f-e758-4bd9-bd45-5b0238a9f02d
+engaged = filter(psg -> startswith(psg.text, "Now we are engaged in a great civil war"),  corpus.passages)
+
+# ╔═╡ 40538b72-f90e-46ba-bff5-aa456888320c
+md"""
+The `document_urns()` function identifies all the individual documents in the corpus. 
+"""
+
+# ╔═╡ f1e2f1d9-9e02-4f9f-8b79-4f8b88568a97
+document_urns(corpus)
+
+# ╔═╡ 499bea0d-6ab7-4696-81f1-cb8256be5e0e
+md"""
+## 3. Citable documents
+
+Like a citable corpus, a *citable document* is defined by a series of citable passages.   The citable document differs from a corpus in two ways, however.
+
+1. It is a citable entity in its own right, with an identifying CTS URN, and a human-readable label, or title.
+2. All the citable passages in the document are contained by the URN identifying the document.
+
+We'll illustrate those two points in the following cells.
+
+"""
+
+# ╔═╡ 5483c449-2de4-4611-a3ef-f4ece41da07d
+md"""
+As with a corpus, the easiest way to create a citable document is to read a string of delimited text in CEx format.  We previously created a corpus from the `tinycex` string:  since it only contains one passage, we could also create a corpus from it.
+"""
+
+# ╔═╡ 9671ed51-979a-4066-9b4b-b9421060c9b5
+tinydocument = document_fromcex(tinycex)
+
+# ╔═╡ 2cc62aa7-2db1-437e-aaa9-c82f7fd49c8d
+md"""
+Optionally, we can include a title for the document.
+"""
+
+# ╔═╡ eeebd224-5784-4f4f-95d2-4670a358eed0
+titled = document_fromcex(tinycex; title = "Introductory sentence of Bancroft's text")
+
+# ╔═╡ 2e43bb3e-869f-4513-9671-222925bc0988
+md"""
+### Citable documents fulfill the `CitableInterface`
+
+This means they implement the functions `urn`, `label` and `cex`.
+"""
+
+# ╔═╡ bcf4b7c5-c6bf-4dc7-85be-5a4451cb42e8
+urn(titled)
+
+# ╔═╡ c926dd0e-cf3a-4141-a18e-0ed6e82f0627
+label(titled)
+
+# ╔═╡ b3412ddc-fbbc-4ec7-b4be-d15826a22cd5
+cex(titled)
+
+# ╔═╡ 0d23165a-83c9-43cb-a847-230444eb5cd0
+md"""
+### Citable documents and citable corpora
+
+We already saw that the `document_urns` function can identify all the documents in a corpus.  The `documents` function resolves a citable corpus into a Vector of citable documents.
+
+
+"""
+
 # ╔═╡ 0b713cf3-9fc1-42ff-b6dd-cf0d1820e95f
 docs = documents(corpus)
+
+# ╔═╡ cb19ce4c-38a8-46ca-8301-21bd2876c0b9
+md"""
+Like the `CitableCorpus` type, the `CitableDocument` type has a `passages` member containing a Vector of `CitablePassage`s, but all of the document's passages will be contained by the URN identifying the document.  Compare the values of the following cells.
+"""
 
 # ╔═╡ 41c0906e-e59f-43fd-8ffb-aa122e8c8a1f
 bancroft = docs[1]
 
+# ╔═╡ d95353c7-54d9-4850-b0a8-036ee51e147e
+urn(bancroft)
+
+# ╔═╡ fecd74ab-bb1f-479c-85d5-b42f49117b04
+bancroft.passages
+
+# ╔═╡ a426f4e4-718f-4010-9d8e-9758fcc50433
+md"""
+#### Example: roundtripping document -> CEX -> document
+
+It's easy to show that when we create the CEX representation of a document, and then create a new document by reading that CEX string, the results are equivalent.
+"""
+
 # ╔═╡ 97b7779f-cc87-4a5d-9ac5-51246a2f8864
-roundtripped = cex(bancroft) |> document_fromcex
+bancroft_viacex = cex(bancroft) |> document_fromcex
 
 # ╔═╡ f76411e3-3bf4-4f69-95b8-17f3383d56ea
-roundtripped == bancroft
+bancroft_viacex == bancroft
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -443,14 +591,44 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╔═╡ Cell order:
 # ╟─f81b2eb8-25fb-11ec-0910-4911df54f93f
 # ╠═da50a6c9-699a-48cf-976c-50cd55aed91d
+# ╟─23a92e23-de00-4da3-a2f7-9e8075f55c81
+# ╠═445b507d-5644-4c4b-b908-7c7c0a361795
+# ╟─6b00dceb-2efd-49e2-9443-8158c39db541
+# ╟─c48d3947-c201-4449-8e3a-4b39bfa06f0e
+# ╠═cab41c17-d0aa-4727-85cd-2ae6a5a04f30
+# ╟─8dc0fc0e-b9df-4186-96ae-2c6a3673d770
+# ╠═cad62b5d-d7fb-4ba5-b39f-6c8fdbe918ff
 # ╟─21f9c59e-f611-4beb-811a-81a4f1282d0a
-# ╠═4cc27d15-f568-4707-b4cb-03e606ab2629
+# ╟─4cc27d15-f568-4707-b4cb-03e606ab2629
 # ╠═d8e0bd00-b705-4a4b-a333-7fe5f5e33fc5
-# ╠═52176177-fe97-44a6-9c9f-9e45d9359282
+# ╠═98a9d7a7-563a-4269-bd1a-1a5a9b241bd0
+# ╟─303d23de-bcf8-47fc-b7f6-45f7216baf15
+# ╠═d300906a-07f9-430d-b26c-0fc8583282ac
+# ╠═2ee1c952-4f0f-4f2e-bb4b-2ae728cdf631
+# ╠═06de49f4-0b91-42fa-8057-bab9aaa21697
+# ╟─0011163c-b486-4507-915e-b62950fe2650
 # ╠═a789c96c-bb16-40ed-8c76-c4ae8e7af262
 # ╠═c479dce8-4183-4097-a73f-8d8e2cf5be47
+# ╟─64407ce2-5565-409f-a38c-b49037ac16f7
+# ╠═3e74280f-e758-4bd9-bd45-5b0238a9f02d
+# ╟─40538b72-f90e-46ba-bff5-aa456888320c
+# ╠═f1e2f1d9-9e02-4f9f-8b79-4f8b88568a97
+# ╟─499bea0d-6ab7-4696-81f1-cb8256be5e0e
+# ╟─5483c449-2de4-4611-a3ef-f4ece41da07d
+# ╠═9671ed51-979a-4066-9b4b-b9421060c9b5
+# ╟─2cc62aa7-2db1-437e-aaa9-c82f7fd49c8d
+# ╠═eeebd224-5784-4f4f-95d2-4670a358eed0
+# ╟─2e43bb3e-869f-4513-9671-222925bc0988
+# ╠═bcf4b7c5-c6bf-4dc7-85be-5a4451cb42e8
+# ╠═c926dd0e-cf3a-4141-a18e-0ed6e82f0627
+# ╠═b3412ddc-fbbc-4ec7-b4be-d15826a22cd5
+# ╟─0d23165a-83c9-43cb-a847-230444eb5cd0
 # ╠═0b713cf3-9fc1-42ff-b6dd-cf0d1820e95f
+# ╟─cb19ce4c-38a8-46ca-8301-21bd2876c0b9
 # ╠═41c0906e-e59f-43fd-8ffb-aa122e8c8a1f
+# ╠═d95353c7-54d9-4850-b0a8-036ee51e147e
+# ╠═fecd74ab-bb1f-479c-85d5-b42f49117b04
+# ╟─a426f4e4-718f-4010-9d8e-9758fcc50433
 # ╠═97b7779f-cc87-4a5d-9ac5-51246a2f8864
 # ╠═f76411e3-3bf4-4f69-95b8-17f3383d56ea
 # ╟─00000000-0000-0000-0000-000000000001
