@@ -16,7 +16,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 ## Some Pluto notebooks
 
 - using the `CitableText` module to work with [CTS URNs](./cts-urns.html)
-- using the `CitableCorpus` module: citable text passages, documents and corpora
+- using the `CitableCorpus` module: [citable text passages, documents and corpora](./texts.html)
 - using the `Orthography` module to work with explicitly defined [orthographic systems](./ortho.html)
 - using the `CitableParserBuilder` module: abstractions for analyzing citable texts
 - using the `CitableCorpusAnalysis` module to analyze and profile text corpora
