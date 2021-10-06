@@ -7,6 +7,11 @@ using InteractiveUtils
 # ╔═╡ 8732114d-ffe6-47de-a4eb-517bf0720b5b
 using CitableParserBuilder
 
+# ╔═╡ e6a42831-cbd7-4f4e-a38d-45e5cfffd24f
+md"""
+*Notebook version*:  **1.0.0**
+"""
+
 # ╔═╡ a2d17a7e-26dd-11ec-2760-cd9cb995322b
 md"""
 # Working with abbreviated URN notation
@@ -515,6 +520,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
+# ╟─e6a42831-cbd7-4f4e-a38d-45e5cfffd24f
 # ╟─a2d17a7e-26dd-11ec-2760-cd9cb995322b
 # ╟─120e208e-f14c-42c0-91c0-c3337e54f666
 # ╟─7ea935d3-3130-4d39-af27-3ff765510688
