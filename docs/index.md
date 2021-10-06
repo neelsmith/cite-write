@@ -11,9 +11,9 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 - introductory text with embedded code examples: TBA
 
-
-
 ## Some Pluto notebooks
+
+### Working with texts
 
 - using the `CitableText` module to work with [CTS URNs](./cts-urns.html)
 - using the `CitableCorpus` module: [citable text passages, documents and corpora](./texts.html)
@@ -22,6 +22,34 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `CitableCorpusAnalysis` module to analyze and profile text corpora
 
 
+### Editing texts
+
+- using the `CitableTeiReaders` module to create citable content from a variety of document formats
+- using the `EditionBuilders` module to create univocal editions from multivalent source documents
+
+### Working with objects and images
+
+- using the `CitableText` module to work with CITE2 URNs
+- using the `CitableImage` module to work with citable image data
+- using the `CitableCollection` module to work with collections of citable objects
+
+
+### Specialized orthographies
+
+- using the `PolytonicGreek` module
+- using the `AtticGreek` module
+- using the `ManuscriptOrthography` module
+
+### Specialized morphological (and other) analyses
+
+- using the `Kanones` module
+- using the `Lycian` module
+- using the `Tabulae` module
+
+### Managing archives of citable content
+
+- using the `EditorsRepo` module
+- using the `HmtArchive` module
 
 ## Documentation
 
