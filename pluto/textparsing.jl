@@ -5,7 +5,7 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 7cd91661-3746-4788-a75b-191fa2ddceec
-using CitableParserBuilder, Orthography, CitableText, CitableCorpus
+using CitableParserBuilder
 
 # ╔═╡ 9037874e-b223-47df-b29e-2c68e4f1cc4b
 corpus = begin 
@@ -19,15 +19,27 @@ end
 md"""
 # Citable text parsing
 
-The `CitableParserBuilder` module defines a structure for citable analyses of a text token of some kind, and functions for parsing a citable corpus.
+The `CitableParserBuilder` module defines:
 
-Since it uses the `OrthograpicSystem` abstraction to tokenize citable texts, we need to import the `Orthography` module along with the modules to work with CTS URNs and citable text structures.
+1. a structure for citable analyses of a text token of some kind
+2. functions for parsing citable text content.
+
+
+Since every parser is specific to the language and orthography of the corpus it is designed to analyze, you should consult documentation (and, soon, additional Pluto notebooks) for parsers built with this module:
+
+- Kanones.jl
+- Tabulae.jl
+- Lycian.jl
+
+
+In this notebook, we'll use a sample parser that is included in the `CitableParserBuilder` module, and built to parse a corpus of all the known texts of Lincoln's Gettysburg Address.  It identifies the form of tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
+
 
 """
 
 # ╔═╡ b64a1672-3eb0-4833-ba36-c92be99b6cf1
 md"""
-##  Citable analyses: the `Analysis` structure
+##  1. Citable analyses: the `Analysis` structure
 
 Although analyzing a chunk of a citable text is a broadly generalizable concept, the `CitableParserBuilder` module was designed with morphological parsing in mind, and the structure of the `Analysis` type reflects that.  Each analysis identifies:
 
@@ -36,74 +48,89 @@ Although analyzing a chunk of a citable text is a broadly generalizable concept,
 3. a *stem* 
 4. an *inflectional rule*
 
-Each item is identified by a URN.
+Each item is identified by a URN.  The easiest way to illustrate this will be to examine output of the parsing functions in the following cells.
 
 """
 
-# ╔═╡ 3d656c2b-667d-471e-9fc9-21d87ae37567
+# ╔═╡ ca514879-6a33-4e69-82c1-e3a5f12d6504
 md"""
-## Aside: working with abbreviated URNs
 
-By default, analyses encode URNs in an abbreviated form (documented  [here](https://neelsmith.github.io/CitableParserBuilder.jl/stable/guide/analyses/)).  The abbreviated form uses the collection identifier and object identifer of a full CITE2 URN, which can suffice to identify content uniquely in cases where you are working with a single version of each collection.
-
-Consider a brief example of an indentifier for a morphological form.
+> Add a note here to checkout the notebook about abbreviated URNs
 """
-
-# ╔═╡ d245eb04-e50c-48f3-acc3-e432a185c96a
-abbreviated_form = FormUrn("morphforms.1000000001")
-
-# ╔═╡ bac9e3d4-86ce-43b8-af50-8f1996fac628
-typeof(abbreviated_form)
-
-# ╔═╡ efd7117f-af5a-4a05-8da0-2764235b2477
-md"""
-If we want to expand the abbreviated form into a full CITE2 URN, we need a dictionary mapping collection names to full URN values for the collection.
-"""
-
-# ╔═╡ 0364c6d9-cad8-4e9e-ba70-48a8dd1d499b
-registry = Dict(
-    "morphforms" => "urn:cite2:kanones:morphforms.v1:"
-)
-
-
-# ╔═╡ 2fe7c2f5-ef29-4b73-82e0-ceb9a7a15e30
-md"""
-Then we can use the `expand` function to create a full CITE2 URN.
-"""
-
-# ╔═╡ 73f0f98c-4c33-408e-be22-519baf5b71b6
-
-expanded = expand(abbreviated_form, registry)
-
-# ╔═╡ 351cea66-efb7-4bde-9293-11e7dafa93ed
-typeof(expanded)
-
-# ╔═╡ d2107159-65b2-4afd-be0d-9ac3b3021086
-md"""
-There is a parallel `abbreviate` function, but note that it returns a string value. You can use that value in the constructor to any type of `AbbreviatedUrn` type. 
-"""
-
-# ╔═╡ 22d78d4c-63b7-41d5-a664-e2a82d3ff935
-abbr_string = abbreviate(expanded)
-
-# ╔═╡ 8b9dbbe1-090d-4c45-8c6a-7b77a2752192
-roundtripped = FormUrn(abbr_string)
-
-# ╔═╡ 408024aa-1886-4c2f-b83e-d47646a541d7
-typeof(roundtripped)
 
 # ╔═╡ 1fdccae5-d118-4286-8e93-c596756c9a64
 md"""
 
-## Parsing citable texts
-
-    !!! note cca
-
-    hey
+## 2. Parsing text content
 
 
-Note on the `CitableCorpusAnalysis` module
+> Add a note here on the `CitableCorpusAnalysis` module
 
+Implementations of the `CitableParser` abstraction can parse string values from a variety of sources, as well as parse citable passages of text, and an entire tokenized corpus.
+
+
+"""
+
+# ╔═╡ f91718c0-1234-405f-842c-c8fe2a075ae2
+gburgparser = CitableParserBuilder.gettysburgParser()
+
+# ╔═╡ d641cfbc-c8a7-4d9a-8869-d1216f35b3a9
+md"We can verify that this is a subtype of the `CitableParser`."
+
+# ╔═╡ 2bc1399e-a62d-4b5b-aba7-0bfead30d942
+typeof(gburgparser) |> supertype
+
+# ╔═╡ 26fb46fe-2b87-4926-8442-08627de72d48
+md"""
+The `parsetoken` function parses a string value representing a single token.  It has two methods:
+
+1. `parsetoken(parser, token)`
+1. `parsetoken(parser, token, optionaldata)`
+
+The `GettysburgParser` requires the latter form as illustrated in the next cell.  The output of `parsetoken` is a list of `Analysis` objects.
+"""
+
+# ╔═╡ 81ffd853-3ff4-464b-87c1-12e2ae901f88
+scoreparses = parsetoken(gburgparser, "score", gburgparser.data)
+
+# ╔═╡ cf3b3f8a-cd85-4964-b9c5-f9030f486f56
+md"""
+The parser produces only one analysis, and identifies its form as Penn tree bank code `NN`, "Noun, singular or mass."
+"""
+
+# ╔═╡ ac575154-c294-4fe8-8176-5cf2fd64efcd
+length(scoreparses)
+
+# ╔═╡ f9867975-b7dc-4f2a-9d9d-2f11a4060a32
+scoreparses[1].form
+
+# ╔═╡ 6432ea21-5d23-4524-8a78-416024e703b8
+md"""
+Its type is a `FormUrn`, which is a subtype of `AbbreviatedUrn`.
+"""
+
+# ╔═╡ 76ee127a-3f1d-46f2-a506-639b3f5fee3a
+typeof(scoreparses[1].form)
+
+# ╔═╡ 4989f154-c6fc-43ee-8e63-4d177d581b50
+typeof(scoreparses[1].form) |> supertype
+
+# ╔═╡ 259050ae-e7a3-41aa-a118-6dc3da6d93ab
+md"""
+There is a parallel `parsewordlist` function.  Its output will be a Vector containing a Vector of analyses for each token in the input list.
+"""
+
+# ╔═╡ 98f93bd5-6177-430f-90bc-6b99eb51ab3e
+parsewordlist(gburgparser, split("Four score and seven years ago"), gburgparser.data)
+
+# ╔═╡ 046def05-b308-4073-800b-1a5995424362
+
+
+# ╔═╡ 076d709c-3f21-471d-88ba-c8d6aeb2bb6f
+
+md"""
+
+To work with citable texts, we'll import the modules to work with CTS URNs and citable text structures along with the `CitableParserBuilder` module.
 """
 
 # ╔═╡ e5bbe44e-0d01-4222-b9bc-d885721330d5
@@ -112,18 +139,12 @@ md"## Load a corpus"
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
 CitableParserBuilder = "c834cb9d-35b9-419a-8ff8-ecaeea9e2a2a"
-CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-Orthography = "0b4c9448-09b0-4e78-95ea-3eb3328be36d"
 
 [compat]
-CitableCorpus = "~0.6.0"
 CitableParserBuilder = "~0.15.2"
-CitableText = "~0.11.0"
 HTTP = "~0.9.16"
-Orthography = "~0.13.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -556,19 +577,23 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─203f429c-26d0-11ec-3527-23bf8c0d2273
 # ╠═7cd91661-3746-4788-a75b-191fa2ddceec
 # ╟─b64a1672-3eb0-4833-ba36-c92be99b6cf1
-# ╟─3d656c2b-667d-471e-9fc9-21d87ae37567
-# ╠═d245eb04-e50c-48f3-acc3-e432a185c96a
-# ╠═bac9e3d4-86ce-43b8-af50-8f1996fac628
-# ╟─efd7117f-af5a-4a05-8da0-2764235b2477
-# ╠═0364c6d9-cad8-4e9e-ba70-48a8dd1d499b
-# ╟─2fe7c2f5-ef29-4b73-82e0-ceb9a7a15e30
-# ╠═73f0f98c-4c33-408e-be22-519baf5b71b6
-# ╠═351cea66-efb7-4bde-9293-11e7dafa93ed
-# ╟─d2107159-65b2-4afd-be0d-9ac3b3021086
-# ╠═22d78d4c-63b7-41d5-a664-e2a82d3ff935
-# ╠═8b9dbbe1-090d-4c45-8c6a-7b77a2752192
-# ╠═408024aa-1886-4c2f-b83e-d47646a541d7
-# ╠═1fdccae5-d118-4286-8e93-c596756c9a64
+# ╟─ca514879-6a33-4e69-82c1-e3a5f12d6504
+# ╟─1fdccae5-d118-4286-8e93-c596756c9a64
+# ╠═f91718c0-1234-405f-842c-c8fe2a075ae2
+# ╟─d641cfbc-c8a7-4d9a-8869-d1216f35b3a9
+# ╠═2bc1399e-a62d-4b5b-aba7-0bfead30d942
+# ╟─26fb46fe-2b87-4926-8442-08627de72d48
+# ╠═81ffd853-3ff4-464b-87c1-12e2ae901f88
+# ╟─cf3b3f8a-cd85-4964-b9c5-f9030f486f56
+# ╠═ac575154-c294-4fe8-8176-5cf2fd64efcd
+# ╠═f9867975-b7dc-4f2a-9d9d-2f11a4060a32
+# ╟─6432ea21-5d23-4524-8a78-416024e703b8
+# ╠═76ee127a-3f1d-46f2-a506-639b3f5fee3a
+# ╠═4989f154-c6fc-43ee-8e63-4d177d581b50
+# ╟─259050ae-e7a3-41aa-a118-6dc3da6d93ab
+# ╠═98f93bd5-6177-430f-90bc-6b99eb51ab3e
+# ╠═046def05-b308-4073-800b-1a5995424362
+# ╠═076d709c-3f21-471d-88ba-c8d6aeb2bb6f
 # ╟─e5bbe44e-0d01-4222-b9bc-d885721330d5
 # ╠═9037874e-b223-47df-b29e-2c68e4f1cc4b
 # ╟─00000000-0000-0000-0000-000000000001
