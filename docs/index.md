@@ -29,7 +29,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 ### Working with objects and images
 
-- using the `CitableText` module to work with CITE2 URNs
+- using the `CitableObject` module to work with CITE2 URNs
 - using the `CitableImage` module to work with citable image data
 - using the `CitableCollection` module to work with collections of citable objects
 
@@ -59,3 +59,13 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/)
 - the [`CitableParserBuilder` module](https://neelsmith.github.io/CitableParserBuilder.jl/stable/)
 - the [`CitableCorpusAnalysis` module](https://github.com/neelsmith/CitableCorpusAnalysis.jl)
+- the [`CitableObject` module](https://cite-architecture.github.io/CitableObject.jl/stable/)
+- the [`CitableImage` module](https://cite-architecture.github.io/CitableImage.jl/stable/)
+- the [`CitableCollection` module](https://cite-architecture.github.io/CitableCollection.jl/stable/)
+- the [`CitableTeiReaders` module](https://hcmid.github.io/CitableTeiReaders.jl/stable/)
+- the [`EditionBuilders` module](https://hcmid.github.io/EditionBuilders.jl/stable/)
+- the `Kanones` module (not yet published)
+- the [`Lycian` module](https://neelsmith.github.io/Lycian.jl/stable/)
+- the [`Tabulae` module](https://neelsmith.github.io/Tabulae.jl/stable/)
+- the [`EditorsRepo` module](https://hcmid.github.io/EditorsRepo.jl/stable/)
+- the [`HmtArchive` module](https://homermultitext.github.io/HmtArchive.jl/stable/)
