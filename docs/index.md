@@ -59,7 +59,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - the [`CitableCorpus` module](https://cite-architecture.github.io/CitableCorpus.jl/stable/)
 - the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/)
 - the [`CitableParserBuilder` module](https://neelsmith.github.io/CitableParserBuilder.jl/stable/)
-- the [`CitableCorpusAnalysis` module](https://github.com/neelsmith/CitableCorpusAnalysis.jl)
+- the [`CitableCorpusAnalysis` module](https://neelsmith.github.io/CitableCorpusAnalysis.jl/stable/)
 - the [`CitableObject` module](https://cite-architecture.github.io/CitableObject.jl/stable/)
 - the [`CitableImage` module](https://cite-architecture.github.io/CitableImage.jl/stable/)
 - the [`CitableCollection` module](https://cite-architecture.github.io/CitableCollection.jl/stable/)

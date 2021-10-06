@@ -10,6 +10,9 @@ using CitableParserBuilder
 # ╔═╡ 076d709c-3f21-471d-88ba-c8d6aeb2bb6f
 using CitableText, CitableCorpus
 
+# ╔═╡ 364303fd-6a9a-4ecd-a503-ffb09caffd5c
+md"*Notebook version*:  **1.0.0**"
+
 # ╔═╡ 203f429c-26d0-11ec-3527-23bf8c0d2273
 md"""
 # Citable text parsing
@@ -599,6 +602,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
+# ╟─364303fd-6a9a-4ecd-a503-ffb09caffd5c
 # ╟─203f429c-26d0-11ec-3527-23bf8c0d2273
 # ╠═7cd91661-3746-4788-a75b-191fa2ddceec
 # ╟─b64a1672-3eb0-4833-ba36-c92be99b6cf1
