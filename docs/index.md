@@ -64,7 +64,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - the [`CitableCollection` module](https://cite-architecture.github.io/CitableCollection.jl/stable/)
 - the [`CitableTeiReaders` module](https://hcmid.github.io/CitableTeiReaders.jl/stable/)
 - the [`EditionBuilders` module](https://hcmid.github.io/EditionBuilders.jl/stable/)
-- the `Kanones` module (not yet published)
+- the `Kanones` module (not yet published: work in progress at [this github repository](https://github.com/neelsmith/Kanones.jl))
 - the [`Lycian` module](https://neelsmith.github.io/Lycian.jl/stable/)
 - the [`Tabulae` module](https://neelsmith.github.io/Tabulae.jl/stable/)
 - the [`EditorsRepo` module](https://hcmid.github.io/EditorsRepo.jl/stable/)
