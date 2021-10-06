@@ -7,13 +7,8 @@ using InteractiveUtils
 # ╔═╡ 7cd91661-3746-4788-a75b-191fa2ddceec
 using CitableParserBuilder
 
-# ╔═╡ 9037874e-b223-47df-b29e-2c68e4f1cc4b
-corpus = begin 
-	using HTTP
-	corpusurl = "https://raw.githubusercontent.com/neelsmith/CitableCorpusAnalysis.jl/dev/test/data/gettysburg/gettysburgcorpus.cex"
-	HTTP.get(corpusurl).body |> String  |> corpus_fromcex
-end
-
+# ╔═╡ 076d709c-3f21-471d-88ba-c8d6aeb2bb6f
+using CitableText, CitableCorpus
 
 # ╔═╡ 203f429c-26d0-11ec-3527-23bf8c0d2273
 md"""
@@ -123,28 +118,58 @@ There is a parallel `parsewordlist` function.  Its output will be a Vector conta
 # ╔═╡ 98f93bd5-6177-430f-90bc-6b99eb51ab3e
 parsewordlist(gburgparser, split("Four score and seven years ago"), gburgparser.data)
 
-# ╔═╡ 046def05-b308-4073-800b-1a5995424362
+# ╔═╡ e5bbe44e-0d01-4222-b9bc-d885721330d5
+md"""### Citable content
 
+If you have a citable passage representing a single token, or a tokenized corpus, you can use the `parsepassage` or `parsecorpus` functions, respectively.
 
-# ╔═╡ 076d709c-3f21-471d-88ba-c8d6aeb2bb6f
-
-md"""
 
 To work with citable texts, we'll import the modules to work with CTS URNs and citable text structures along with the `CitableParserBuilder` module.
 """
 
-# ╔═╡ e5bbe44e-0d01-4222-b9bc-d885721330d5
-md"## Load a corpus"
+# ╔═╡ eaf3182e-09c0-442b-8a92-b7c83bb8b4ac
+tokenurn = CtsUrn("urn:cts:citedemo:gburg.bancroft.v2:1.2")
+
+# ╔═╡ b3b0802b-acce-4de0-9dac-0c31601c4af6
+tokenpassage = CitablePassage(tokenurn, "score")
+
+# ╔═╡ 4fe55206-c347-4a76-96a3-336b9a85d24e
+passage_analysis = parsepassage(gburgparser, tokenpassage, gburgparser.data)
+
+# ╔═╡ 3713c2d0-0d36-4171-8677-f59bd686e1d6
+md"""Notice that the result is new type of object: an `AnalyzedToken`.
+
+The `AnalyzedToken` associates the original citable token, which uniquely identifies a single token in a concrete text, with the Vector of analyses resulting from parsing the passage's text content.
+"""
+
+# ╔═╡ f347387d-9b81-4901-8dc5-469784b0cac1
+passage_analysis |> typeof
+
+# ╔═╡ c372d1e8-35bf-4fdc-9733-23430b460865
+passage_analysis.passage
+
+# ╔═╡ ffe81e62-8b97-44b9-b4a5-d86967c69551
+passage_analysis.analyses
+
+# ╔═╡ 087dba00-76a5-40ae-8d9f-f1ee7c91df05
+md"""
+The `analyses` member is equivalent to the output of parsing the string content with `parsetoken`.
+"""
+
+# ╔═╡ f659ce21-8eae-4a6d-a20e-79d19c6361d6
+passage_analysis.analyses == scoreparses
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
 CitableParserBuilder = "c834cb9d-35b9-419a-8ff8-ecaeea9e2a2a"
-HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 
 [compat]
+CitableCorpus = "~0.6.0"
 CitableParserBuilder = "~0.15.2"
-HTTP = "~0.9.16"
+CitableText = "~0.11.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -592,9 +617,16 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═4989f154-c6fc-43ee-8e63-4d177d581b50
 # ╟─259050ae-e7a3-41aa-a118-6dc3da6d93ab
 # ╠═98f93bd5-6177-430f-90bc-6b99eb51ab3e
-# ╠═046def05-b308-4073-800b-1a5995424362
-# ╠═076d709c-3f21-471d-88ba-c8d6aeb2bb6f
 # ╟─e5bbe44e-0d01-4222-b9bc-d885721330d5
-# ╠═9037874e-b223-47df-b29e-2c68e4f1cc4b
+# ╠═076d709c-3f21-471d-88ba-c8d6aeb2bb6f
+# ╠═eaf3182e-09c0-442b-8a92-b7c83bb8b4ac
+# ╠═b3b0802b-acce-4de0-9dac-0c31601c4af6
+# ╠═4fe55206-c347-4a76-96a3-336b9a85d24e
+# ╟─3713c2d0-0d36-4171-8677-f59bd686e1d6
+# ╠═f347387d-9b81-4901-8dc5-469784b0cac1
+# ╠═c372d1e8-35bf-4fdc-9733-23430b460865
+# ╠═ffe81e62-8b97-44b9-b4a5-d86967c69551
+# ╟─087dba00-76a5-40ae-8d9f-f1ee7c91df05
+# ╠═f659ce21-8eae-4a6d-a20e-79d19c6361d6
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
