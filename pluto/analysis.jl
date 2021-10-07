@@ -10,11 +10,36 @@ using CitableCorpusAnalysis
 # ╔═╡ e161eaad-2a14-4971-b0fd-7d48966c2b61
 using CitableText, CitableCorpus, Orthography, CitableParserBuilder
 
+# ╔═╡ 59e146a2-8212-4623-903f-cf8fe3de2cc2
+corpus = begin
+	using HTTP
+	corpusurl = "https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex"
+	HTTP.get(corpusurl).body |> String |> corpus_fromcex
+end
+
+# ╔═╡ 2bb950e9-77c7-4449-841e-4136b409bb68
+md"""
+- *Notebook version*:  **prerelease**
+- *New module*: `CitableCorpusAnalysis`
+"""
+
 # ╔═╡ 88682e5a-2767-11ec-3b09-fd6d7e041bc0
 md"""# Analyzing a citable corpus
 
 
 """
+
+# ╔═╡ 5bb71d87-a7c2-4d91-8250-5a3571780726
+ortho = simpleAscii()
+
+# ╔═╡ 01392197-ea77-491e-b634-b0c9cc25e951
+parser = CitableParserBuilder.gettysburgParser()
+
+# ╔═╡ 186faef8-d2be-473d-a8d7-53c7bcaf0469
+acorpus = AnalyticalCorpus(corpus, ortho, parser)
+
+# ╔═╡ 13953596-b517-4096-b378-9887a3c6c95f
+analyzecorpus(acorpus, parser.data)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -23,6 +48,7 @@ CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
 CitableCorpusAnalysis = "c8e18afb-d0b9-4a73-9e55-d0fe0b502904"
 CitableParserBuilder = "c834cb9d-35b9-419a-8ff8-ecaeea9e2a2a"
 CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 Orthography = "0b4c9448-09b0-4e78-95ea-3eb3328be36d"
 
 [compat]
@@ -30,6 +56,7 @@ CitableCorpus = "~0.6.0"
 CitableCorpusAnalysis = "~0.4.2"
 CitableParserBuilder = "~0.15.2"
 CitableText = "~0.11.0"
+HTTP = "~0.9.16"
 Orthography = "~0.13.0"
 """
 
@@ -658,8 +685,14 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
+# ╟─2bb950e9-77c7-4449-841e-4136b409bb68
 # ╟─88682e5a-2767-11ec-3b09-fd6d7e041bc0
 # ╠═0bcf5e96-0533-4120-8607-dec92dda12dc
 # ╠═e161eaad-2a14-4971-b0fd-7d48966c2b61
+# ╠═59e146a2-8212-4623-903f-cf8fe3de2cc2
+# ╠═5bb71d87-a7c2-4d91-8250-5a3571780726
+# ╠═01392197-ea77-491e-b634-b0c9cc25e951
+# ╠═186faef8-d2be-473d-a8d7-53c7bcaf0469
+# ╠═13953596-b517-4096-b378-9887a3c6c95f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

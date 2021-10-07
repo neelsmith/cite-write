@@ -20,7 +20,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `Orthography` module to work with explicitly defined [orthographic systems](./ortho.html)
 - using the `CitableParserBuilder` module: abstractions for [analyzing citable texts](./textparsing.html)
     - (with an aside on using the `CitableParserBuilder`'s [abbreviated URN notation](./abbrurns.html))
-- using the `CitableCorpusAnalysis` module to analyze and profile text corpora
+- using the `CitableCorpusAnalysis` module to [analyze and profile text corpora](./analysis.html)
 
 
 ### Editing texts
