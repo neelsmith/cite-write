@@ -9,7 +9,8 @@ using CitableParserBuilder
 
 # ╔═╡ e6a42831-cbd7-4f4e-a38d-45e5cfffd24f
 md"""
-*Notebook version*:  **1.0.0**
+- *Notebook version*:  **1.0.0**
+- *New module*:  `CitableParserBiulder`
 """
 
 # ╔═╡ a2d17a7e-26dd-11ec-2760-cd9cb995322b

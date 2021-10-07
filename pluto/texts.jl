@@ -14,6 +14,12 @@ corpuscex = begin
 	HTTP.get(corpusurl).body |> String
 end
 
+# ╔═╡ 743419af-12fd-4ee4-ba6a-8c78fedc79b1
+md"""
+- *Notebook version*:  **1.0.0**
+- *New module*: `CitableCorpus`
+"""
+
 # ╔═╡ f81b2eb8-25fb-11ec-0910-4911df54f93f
 md"""
 # Working with citable texts
@@ -589,6 +595,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
+# ╟─743419af-12fd-4ee4-ba6a-8c78fedc79b1
 # ╟─f81b2eb8-25fb-11ec-0910-4911df54f93f
 # ╠═da50a6c9-699a-48cf-976c-50cd55aed91d
 # ╟─23a92e23-de00-4da3-a2f7-9e8075f55c81

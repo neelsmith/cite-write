@@ -7,6 +7,12 @@ using InteractiveUtils
 # ╔═╡ df488da6-f312-4b00-8b91-4123fc7814e4
 using CitableText, CitableBase
 
+# ╔═╡ 49e6abce-6caf-46e7-862b-d8650de0109b
+md"""
+- *Notebook version*:  **1.0.0**
+- *New module*:  `CitableText`
+"""
+
 # ╔═╡ 3e0a86e4-22b6-11ec-1d3c-b9947d155385
 md""" # CTS URNs in Julia
 
@@ -269,6 +275,7 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 """
 
 # ╔═╡ Cell order:
+# ╟─49e6abce-6caf-46e7-862b-d8650de0109b
 # ╟─3e0a86e4-22b6-11ec-1d3c-b9947d155385
 # ╠═df488da6-f312-4b00-8b91-4123fc7814e4
 # ╟─2a241fb4-e598-4c8e-a017-6023b6e83453

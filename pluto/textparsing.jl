@@ -11,7 +11,10 @@ using CitableParserBuilder
 using CitableText, CitableCorpus
 
 # ╔═╡ 364303fd-6a9a-4ecd-a503-ffb09caffd5c
-md"*Notebook version*:  **1.0.0**"
+md"""
+- *Notebook version*:  **1.0.0**
+- *New module*: `CitableParserBuilder`
+"""
 
 # ╔═╡ 203f429c-26d0-11ec-3527-23bf8c0d2273
 md"""

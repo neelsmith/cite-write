@@ -10,6 +10,12 @@ using Orthography
 # ╔═╡ ae2b0b72-3d4d-49a5-b26e-a85dd1e00f9a
 using CitableCorpus, HTTP
 
+# ╔═╡ 781b1e94-01d6-4339-a71a-5c2e3272b50a
+md"""
+- *Notebook version*: **1.0.0**
+- *New module*: `Orthography`
+"""
+
 # ╔═╡ 66a143a5-80b9-49e7-8ae5-ba10fcce4123
 md"""
 # Working with a defined orthographic system
@@ -576,6 +582,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
+# ╟─781b1e94-01d6-4339-a71a-5c2e3272b50a
 # ╟─66a143a5-80b9-49e7-8ae5-ba10fcce4123
 # ╠═90934ad0-f303-4ede-be6d-d08d9ad9a5ec
 # ╟─1a99e9c5-60ca-46fe-83cc-92126f5e9a1d
