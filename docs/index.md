@@ -24,10 +24,6 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 
 
-### Editing texts
-
-- using the `CitableTeiReaders` module to create citable content from a variety of document formats
-- using the `EditionBuilders` module to create univocal editions from multivalent source documents
 
 ### Working with objects and images
 
@@ -55,6 +51,12 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - analyzing corpora in ancient Greek
 - analyzing corpora in Latin
 - analyzing corpora in Lycian
+
+
+### Editing texts
+
+- using the `CitableTeiReaders` module to create citable content from a variety of document formats
+- using the `EditionBuilders` module to create univocal editions from multivalent source documents
 
 
 ### Managing archives of citable content
