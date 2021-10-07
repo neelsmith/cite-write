@@ -23,6 +23,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `CitableCorpusAnalysis` module to [analyze and profile text corpora](./analysis.html)
 
 
+
 ### Editing texts
 
 - using the `CitableTeiReaders` module to create citable content from a variety of document formats
@@ -33,6 +34,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `CitableObject` module to work with CITE2 URNs
 - using the `CitableImage` module to work with citable image data
 - using the `CitableCollection` module to work with collections of citable objects
+- using the `CitablePhysicalText` module to work with digital editions associated with physical artifacts
 
 
 ### Specialized orthographies
@@ -47,6 +49,14 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `Lycian` module
 - using the `Tabulae` module
 
+
+### Applications to specific text corpora
+
+- analyzing corpora in ancient Greek
+- analyzing corpora in Latin
+- analyzing corpora in Lycian
+
+
 ### Managing archives of citable content
 
 - using the `EditorsRepo` module
@@ -57,6 +67,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - the [`CitableBase` module](https://cite-architecture.github.io/CitableBase.jl/stable/)
 - the [`CitableText` module](https://cite-architecture.github.io/CitableText.jl/stable/)
 - the [`CitableCorpus` module](https://cite-architecture.github.io/CitableCorpus.jl/stable/)
+- the [`CitablePhysicalText` module](https://cite-architecture.github.io/CitablePhysicalText.jl/stable/)
 - the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/)
 - the [`CitableParserBuilder` module](https://neelsmith.github.io/CitableParserBuilder.jl/stable/)
 - the [`CitableCorpusAnalysis` module](https://neelsmith.github.io/CitableCorpusAnalysis.jl/stable/)
