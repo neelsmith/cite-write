@@ -13,7 +13,10 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 ## Some Pluto notebooks
 
-### Working with texts
+### 1. Working with texts
+
+
+#### Generally applicable modules
 
 - using the `CitableText` module to work with [CTS URNs](./cts-urns.html)
 - using the `CitableCorpus` module: [citable text passages, documents and corpora](./texts.html)
@@ -23,9 +26,25 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `CitableCorpusAnalysis` module to [analyze and profile text corpora](./analysis.html)
 
 
+#### Specialized orthographies
 
+- using the `PolytonicGreek` module
+- using the `AtticGreek` module
+- using the `ManuscriptOrthography` module
 
-### Working with objects and images
+#### Specialized morphological (and other) analyses
+
+- using the `Kanones` module
+- using the `Lycian` module
+- using the `Tabulae` module
+
+#### Applications to specific text corpora
+
+- analyzing corpora in ancient Greek
+- analyzing corpora in Latin
+- analyzing corpora in Lycian
+
+### 2. Working with objects and images
 
 - using the `CitableObject` module to work with CITE2 URNs
 - using the `CitableImage` module to work with citable image data
@@ -33,33 +52,15 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `CitablePhysicalText` module to work with digital editions associated with physical artifacts
 
 
-### Specialized orthographies
+### 3. Developing digital text corpora
 
-- using the `PolytonicGreek` module
-- using the `AtticGreek` module
-- using the `ManuscriptOrthography` module
-
-### Specialized morphological (and other) analyses
-
-- using the `Kanones` module
-- using the `Lycian` module
-- using the `Tabulae` module
-
-
-### Applications to specific text corpora
-
-- analyzing corpora in ancient Greek
-- analyzing corpora in Latin
-- analyzing corpora in Lycian
-
-
-### Editing texts
+#### Editing texts
 
 - using the `CitableTeiReaders` module to create citable content from a variety of document formats
 - using the `EditionBuilders` module to create univocal editions from multivalent source documents
 
 
-### Managing archives of citable content
+#### Managing archives of citable content
 
 - using the `EditorsRepo` module
 - using the `HmtArchive` module
