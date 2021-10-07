@@ -67,20 +67,22 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 ## Documentation
 
+Modules listed alphabetically:
+
 - the [`CitableBase` module](https://cite-architecture.github.io/CitableBase.jl/stable/)
-- the [`CitableText` module](https://cite-architecture.github.io/CitableText.jl/stable/)
-- the [`CitableCorpus` module](https://cite-architecture.github.io/CitableCorpus.jl/stable/)
-- the [`CitablePhysicalText` module](https://cite-architecture.github.io/CitablePhysicalText.jl/stable/)
-- the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/)
-- the [`CitableParserBuilder` module](https://neelsmith.github.io/CitableParserBuilder.jl/stable/)
-- the [`CitableCorpusAnalysis` module](https://neelsmith.github.io/CitableCorpusAnalysis.jl/stable/)
-- the [`CitableObject` module](https://cite-architecture.github.io/CitableObject.jl/stable/)
-- the [`CitableImage` module](https://cite-architecture.github.io/CitableImage.jl/stable/)
 - the [`CitableCollection` module](https://cite-architecture.github.io/CitableCollection.jl/stable/)
+- the [`CitableCorpus` module](https://cite-architecture.github.io/CitableCorpus.jl/stable/)
+- the [`CitableCorpusAnalysis` module](https://neelsmith.github.io/CitableCorpusAnalysis.jl/stable/)
+- the [`CitableImage` module](https://cite-architecture.github.io/CitableImage.jl/stable/)
+- the [`CitableObject` module](https://cite-architecture.github.io/CitableObject.jl/stable/)
+- the [`CitableParserBuilder` module](https://neelsmith.github.io/CitableParserBuilder.jl/stable/)
+- the [`CitablePhysicalText` module](https://cite-architecture.github.io/CitablePhysicalText.jl/stable/)
 - the [`CitableTeiReaders` module](https://hcmid.github.io/CitableTeiReaders.jl/stable/)
+- the [`CitableText` module](https://cite-architecture.github.io/CitableText.jl/stable/)
 - the [`EditionBuilders` module](https://hcmid.github.io/EditionBuilders.jl/stable/)
-- the `Kanones` module (not yet published: work in progress at [this github repository](https://github.com/neelsmith/Kanones.jl))
-- the [`Lycian` module](https://neelsmith.github.io/Lycian.jl/stable/)
-- the [`Tabulae` module](https://neelsmith.github.io/Tabulae.jl/stable/)
 - the [`EditorsRepo` module](https://hcmid.github.io/EditorsRepo.jl/stable/)
 - the [`HmtArchive` module](https://homermultitext.github.io/HmtArchive.jl/stable/)
+- the `Kanones` module (not yet published: work in progress at [this github repository](https://github.com/neelsmith/Kanones.jl))
+- the [`Lycian` module](https://neelsmith.github.io/Lycian.jl/stable/)
+- the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/)
+- the [`Tabulae` module](https://neelsmith.github.io/Tabulae.jl/stable/)
