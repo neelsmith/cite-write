@@ -22,7 +22,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 - using the `CitableCorpus` module: [citable text passages, documents and corpora](./texts.html) (version *1.1.0*)
     - (with an aside on [reading CITE data with Julia IO](./julia_io.html)) (version *1.0.0*)
 - using the `Orthography` module to work with explicitly defined [orthographic systems](./ortho.html) (version *1.1.0*)
-- using the `CitableParserBuilder` module: abstractions for [analyzing citable texts](./textparsing.html)
+- using the `CitableParserBuilder` module: abstractions for [analyzing citable texts](./textparsing.html) (version *1.0.1*)
     - (with an aside on using the `CitableParserBuilder`'s [abbreviated URN notation](./abbrurns.html))
 - using the `CitableCorpusAnalysis` module to [analyze and profile text corpora](./analysis.html)
 
