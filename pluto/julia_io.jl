@@ -4,218 +4,81 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ da50a6c9-699a-48cf-976c-50cd55aed91d
-using CitableText, CitableCorpus
+# ╔═╡ d4e44913-fda4-440f-8af4-9eeaf3691c12
+using HTTP, CitableCorpus
 
-# ╔═╡ a789c96c-bb16-40ed-8c76-c4ae8e7af262
-corpuscex = begin
-	using HTTP
-	corpusurl = "https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex"
-	HTTP.get(corpusurl).body |> String
+# ╔═╡ 9c2ae121-bfbd-4234-b7ad-9d12eb34905b
+md"""
+*Notebook version*: **1.0.0**
+
+*New modules*:  `CitableCorpus`, `HTTP`
+"""
+
+# ╔═╡ cc79e245-cac0-478e-8e49-ab57f56dae08
+md"""# Use Julia IO to read CITE data
+"""
+
+# ╔═╡ c0cb99b2-5d73-45e3-8492-41b5b2693b02
+md"""
+## Read a text corpus from a URL
+
+In the following cell, the file identified by a URL has a CEX-formatted corpus of all versions of the Gettysburg Address.
+"""
+
+# ╔═╡ 28dc095e-8757-4baf-9552-dd6f862b290f
+corpusurl = "https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex"
+
+# ╔═╡ 73aaa3df-6cc6-4402-afb8-5bb06d6edabc
+md"""
+You can use the `HTTP` module's `get` function to read a URL.  The result is a `Response` object with several fields, including the one we're interested in: the `body` field has the content of the URL.  We can pass this to the `corpus_fromcex` function, either as a parameter within parentheses, or as here with Julia's pipe operator `|>`.
+"""
+
+# ╔═╡ c5e1d394-2819-11ec-2016-29ccb06f108c
+corpus1 = HTTP.get(corpusurl).body |> corpus_fromcex
+
+
+# ╔═╡ edb43234-6b58-4611-b2ae-55ff788214c8
+md"""
+## Read a text corpus from a local file
+
+Reading a corpus from a local file is similar.   To create an illustrative example, we can download the URL from the previous section to a local file.  The `download` function returns the name of the downloaded file.
+"""
+
+# ╔═╡ 63ace2af-1cea-4e67-a1ce-5038a348dff8
+filename = download(corpusurl)
+
+# ╔═╡ 259d7583-d3fc-4ebe-b2ae-9aa12327bdf8
+md"""
+With no additional parameters, the `read` function reads the entire file's contents, which we can again pipe into `corpus_fromcex`.
+"""
+
+# ╔═╡ db7afe73-f823-4886-9cfb-b94c72f5c700
+corpus2 = read(filename) |> corpus_fromcex
+
+# ╔═╡ 369ce603-e36d-44cc-a9c2-ceebe162861e
+md""" ## Tidy download
+"""
+
+# ╔═╡ f9a53eb7-dac6-42f2-9e97-6ec61bd3d3c2
+md"""If you prefer avoiding the `HTTP` module, you could of course use the `download ` function to retrieve remote data, as in the previous section. In Pluto, you can group a a couple of lines together to tidy up by removing the temporary file.
+
+"""
+
+# ╔═╡ 2f4681ec-ac9e-457a-aa47-f252de7e8c6f
+corpus3 = begin
+	tempfile = download("https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex")
+	corp = read(tempfile) |> corpus_fromcex
+	rm(tempfile)
+	corp
 end
 
-# ╔═╡ 743419af-12fd-4ee4-ba6a-8c78fedc79b1
-md"""
-- *Notebook version*:  **1.1.0**
-- *New module*: `CitableCorpus`
-"""
-
-# ╔═╡ f81b2eb8-25fb-11ec-0910-4911df54f93f
-md"""
-# Working with citable texts
-
-This notebook introduces three structures defined in the `CitableCorpus` library:
-
-1. the `CitablePassage`, a kind of  `Citable` object that  pairs a CTS URN with a string of text content
-1. the `CitableCorpus`, a sequence of `CitablePassage`s.
-1. the `CitableDocument`, a kind of  `Citable` object including a sequence of `CitablePassage`s.  The document's identifying URN is a CTS URN that, in URN logic, contains all of its citable passages.
-"""
-
-# ╔═╡ 23a92e23-de00-4da3-a2f7-9e8075f55c81
-md"""
-## Citable passages
-
-A *citable passage* associates an identifying CTS URN with a text string.  You can manually construct them, as in the following cell.
-"""
-
-# ╔═╡ 445b507d-5644-4c4b-b908-7c7c0a361795
-psg1 = CitablePassage(
-		 CtsUrn("urn:cts:citedemo:gburg.bancroft.v2:1"), 
-		 "Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal."
-	)
-
-
-# ╔═╡ 6b00dceb-2efd-49e2-9443-8158c39db541
-md"""
-You can also create a passage from a delimited text string.  If you use the default delimiter (the vertical pipe `|`), you only need to provide one parameter to the `passage_fromcex` function.
-"""
-
-# ╔═╡ c48d3947-c201-4449-8e3a-4b39bfa06f0e
-psgcex = "urn:cts:citedemo:gburg.bancroft.v2:1|Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal."
-
-# ╔═╡ cab41c17-d0aa-4727-85cd-2ae6a5a04f30
-psg2 =  CitableCorpus.passage_fromcex(psgcex)
-
-# ╔═╡ 8dc0fc0e-b9df-4186-96ae-2c6a3673d770
-md"The results are equivalent:"
-
-# ╔═╡ cad62b5d-d7fb-4ba5-b39f-6c8fdbe918ff
-psg1 == psg2
-
-# ╔═╡ 21f9c59e-f611-4beb-811a-81a4f1282d0a
-md"""
-## Citable text corpora
-"""
-
-# ╔═╡ 4cc27d15-f568-4707-b4cb-03e606ab2629
-md"""
-A *citable corpus* is simply a list of citable passages. We could create them manually, or read them from the `ctsdata` block of a CEX source. The following cells use a `ctsdata` block with a single line of delimited text, identical to the text we used above to create an individual passage.  The corpus built from this source comprises only one citable passage.
-"""
-
-# ╔═╡ d8e0bd00-b705-4a4b-a333-7fe5f5e33fc5
-tinycex = """#!ctsdata
-urn:cts:citedemo:gburg.bancroft.v2:1|Four score and seven years ago our fathers brought forth, on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
-"""
-
-# ╔═╡ 98a9d7a7-563a-4269-bd1a-1a5a9b241bd0
-tinycorpus = corpus_fromcex(tinycex)
-
-# ╔═╡ 303d23de-bcf8-47fc-b7f6-45f7216baf15
-md"""
-The citable content is in the `passages` member of the corpus, which is simply a Vector of `CitablePassage`s, each with its own `urn` and `text` members.
-"""
-
-# ╔═╡ d300906a-07f9-430d-b26c-0fc8583282ac
-tinycorpus.passages
-
-# ╔═╡ 2ee1c952-4f0f-4f2e-bb4b-2ae728cdf631
-tinycorpus.passages[1].urn
-
-# ╔═╡ 06de49f4-0b91-42fa-8057-bab9aaa21697
-tinycorpus.passages[1].text
-
-# ╔═╡ 0011163c-b486-4507-915e-b62950fe2650
-md"""
-### Example: loading the Gettysburg Address from a URL
-
-
-Normally, you'll want to load a corpus from a local or remote file.  The `corpus_fromcex` function takes text data as its argument (which could be either a String or Vector of Unicode bytes),so  we can use normal Julia IO to read data from a file or a URL, and pass that to `corpus_fromcex`.  (See the notebook `julia_io.html` on this site for fuller examples.)
-
-The following cells instantiates a corpus of the five extant texts of Lincoln's Gettysburg Address.  Our corpus comprises 20 citable passages in 5 documents.
-"""
-
-# ╔═╡ c479dce8-4183-4097-a73f-8d8e2cf5be47
-corpus = corpus_fromcex(corpuscex)
-
-# ╔═╡ 125f881b-95fb-4732-8600-25896513226f
-download("https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex") |> read |> corpus_fromcex
-
-# ╔═╡ 64407ce2-5565-409f-a38c-b49037ac16f7
-md"""
-We can work directly with the Vector of passages.
-"""
-
-# ╔═╡ 3e74280f-e758-4bd9-bd45-5b0238a9f02d
-engaged = filter(psg -> startswith(psg.text, "Now we are engaged in a great civil war"),  corpus.passages)
-
-# ╔═╡ 40538b72-f90e-46ba-bff5-aa456888320c
-md"""
-The `document_urns()` function identifies all the individual documents in the corpus. 
-"""
-
-# ╔═╡ f1e2f1d9-9e02-4f9f-8b79-4f8b88568a97
-document_urns(corpus)
-
-# ╔═╡ 499bea0d-6ab7-4696-81f1-cb8256be5e0e
-md"""
-## Citable documents
-
-Like a citable corpus, a *citable document* is defined by a series of citable passages.   The citable document differs from a corpus in two ways, however.
-
-1. It is a citable entity in its own right, with an identifying CTS URN, and a human-readable label, or title.
-2. All the citable passages in the document are contained by the URN identifying the document.
-
-We'll illustrate those two points in the following cells.
-
-"""
-
-# ╔═╡ 5483c449-2de4-4611-a3ef-f4ece41da07d
-md"""
-As with a corpus, the easiest way to create a citable document is to read a string of delimited text in CEx format.  We previously created a corpus from the `tinycex` string:  since it only contains one passage, we could also create a corpus from it.
-"""
-
-# ╔═╡ 9671ed51-979a-4066-9b4b-b9421060c9b5
-tinydocument = document_fromcex(tinycex)
-
-# ╔═╡ 2cc62aa7-2db1-437e-aaa9-c82f7fd49c8d
-md"""
-Optionally, we can include a title for the document.
-"""
-
-# ╔═╡ eeebd224-5784-4f4f-95d2-4670a358eed0
-titled = document_fromcex(tinycex; title = "Introductory sentence of Bancroft's text")
-
-# ╔═╡ 2e43bb3e-869f-4513-9671-222925bc0988
-md"""
-### Citable documents fulfill the `CitableInterface`
-
-This means they implement the functions `urn`, `label` and `cex`.
-"""
-
-# ╔═╡ bcf4b7c5-c6bf-4dc7-85be-5a4451cb42e8
-urn(titled)
-
-# ╔═╡ c926dd0e-cf3a-4141-a18e-0ed6e82f0627
-label(titled)
-
-# ╔═╡ b3412ddc-fbbc-4ec7-b4be-d15826a22cd5
-cex(titled)
-
-# ╔═╡ 0d23165a-83c9-43cb-a847-230444eb5cd0
-md"""### Citable documents and citable corpora
-
-We already saw that the `document_urns` function can identify all the documents in a corpus.  The `documents` function resolves a citable corpus into a Vector of citable documents.
-
-
-"""
-
-# ╔═╡ 0b713cf3-9fc1-42ff-b6dd-cf0d1820e95f
-docs = documents(corpus)
-
-# ╔═╡ cb19ce4c-38a8-46ca-8301-21bd2876c0b9
-md"""
-Like the `CitableCorpus` type, the `CitableDocument` type has a `passages` member containing a Vector of `CitablePassage`s, but all of the document's passages will be contained by the URN identifying the document.  Compare the values of the following cells.
-"""
-
-# ╔═╡ 41c0906e-e59f-43fd-8ffb-aa122e8c8a1f
-bancroft = docs[1]
-
-# ╔═╡ d95353c7-54d9-4850-b0a8-036ee51e147e
-urn(bancroft)
-
-# ╔═╡ fecd74ab-bb1f-479c-85d5-b42f49117b04
-bancroft.passages
-
-# ╔═╡ a426f4e4-718f-4010-9d8e-9758fcc50433
-md"""
-#### Example: roundtripping document -> CEX -> document
-
-It's easy to show that when we create the CEX representation of a document, and then create a new document by reading that CEX string, the results are equivalent.
-"""
-
-# ╔═╡ 97b7779f-cc87-4a5d-9ac5-51246a2f8864
-bancroft_viacex = cex(bancroft) |> document_fromcex
-
-# ╔═╡ f76411e3-3bf4-4f69-95b8-17f3383d56ea
-bancroft_viacex == bancroft
-
-# ╔═╡ b8f1761d-1701-430f-b580-8ccbef7fc31b
+# ╔═╡ cd58c856-6bb7-457d-910f-e053d6990e8d
 md"""
 
 ---
 """
 
-# ╔═╡ bbbdd792-6323-4156-b4ac-ab1fcb917696
+# ╔═╡ 0cfb2e73-54b1-4c17-a37a-91c2f9ed7688
 css = html"""<style>
 pluto-notebook {
   counter-reset: section;
@@ -227,19 +90,20 @@ pluto-notebook h2:before {
   counter-increment: section;
   content: "" counter(section) ". ";
 }
-
+pluto-notebook h3:before {
+  counter-increment: subsection;
+  content: counter(section) "." counter(subsection) " ";
+}
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
-CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 
 [compat]
 CitableCorpus = "~0.6.1"
-CitableText = "~0.11.0"
 HTTP = "~0.9.16"
 """
 
@@ -618,51 +482,21 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╟─743419af-12fd-4ee4-ba6a-8c78fedc79b1
-# ╟─f81b2eb8-25fb-11ec-0910-4911df54f93f
-# ╠═da50a6c9-699a-48cf-976c-50cd55aed91d
-# ╟─23a92e23-de00-4da3-a2f7-9e8075f55c81
-# ╠═445b507d-5644-4c4b-b908-7c7c0a361795
-# ╟─6b00dceb-2efd-49e2-9443-8158c39db541
-# ╟─c48d3947-c201-4449-8e3a-4b39bfa06f0e
-# ╠═cab41c17-d0aa-4727-85cd-2ae6a5a04f30
-# ╟─8dc0fc0e-b9df-4186-96ae-2c6a3673d770
-# ╠═cad62b5d-d7fb-4ba5-b39f-6c8fdbe918ff
-# ╟─21f9c59e-f611-4beb-811a-81a4f1282d0a
-# ╟─4cc27d15-f568-4707-b4cb-03e606ab2629
-# ╠═d8e0bd00-b705-4a4b-a333-7fe5f5e33fc5
-# ╠═98a9d7a7-563a-4269-bd1a-1a5a9b241bd0
-# ╟─303d23de-bcf8-47fc-b7f6-45f7216baf15
-# ╠═d300906a-07f9-430d-b26c-0fc8583282ac
-# ╠═2ee1c952-4f0f-4f2e-bb4b-2ae728cdf631
-# ╠═06de49f4-0b91-42fa-8057-bab9aaa21697
-# ╟─0011163c-b486-4507-915e-b62950fe2650
-# ╠═a789c96c-bb16-40ed-8c76-c4ae8e7af262
-# ╠═c479dce8-4183-4097-a73f-8d8e2cf5be47
-# ╠═125f881b-95fb-4732-8600-25896513226f
-# ╟─64407ce2-5565-409f-a38c-b49037ac16f7
-# ╠═3e74280f-e758-4bd9-bd45-5b0238a9f02d
-# ╟─40538b72-f90e-46ba-bff5-aa456888320c
-# ╠═f1e2f1d9-9e02-4f9f-8b79-4f8b88568a97
-# ╟─499bea0d-6ab7-4696-81f1-cb8256be5e0e
-# ╟─5483c449-2de4-4611-a3ef-f4ece41da07d
-# ╠═9671ed51-979a-4066-9b4b-b9421060c9b5
-# ╟─2cc62aa7-2db1-437e-aaa9-c82f7fd49c8d
-# ╠═eeebd224-5784-4f4f-95d2-4670a358eed0
-# ╟─2e43bb3e-869f-4513-9671-222925bc0988
-# ╠═bcf4b7c5-c6bf-4dc7-85be-5a4451cb42e8
-# ╠═c926dd0e-cf3a-4141-a18e-0ed6e82f0627
-# ╠═b3412ddc-fbbc-4ec7-b4be-d15826a22cd5
-# ╟─0d23165a-83c9-43cb-a847-230444eb5cd0
-# ╠═0b713cf3-9fc1-42ff-b6dd-cf0d1820e95f
-# ╟─cb19ce4c-38a8-46ca-8301-21bd2876c0b9
-# ╠═41c0906e-e59f-43fd-8ffb-aa122e8c8a1f
-# ╠═d95353c7-54d9-4850-b0a8-036ee51e147e
-# ╠═fecd74ab-bb1f-479c-85d5-b42f49117b04
-# ╟─a426f4e4-718f-4010-9d8e-9758fcc50433
-# ╠═97b7779f-cc87-4a5d-9ac5-51246a2f8864
-# ╠═f76411e3-3bf4-4f69-95b8-17f3383d56ea
-# ╟─b8f1761d-1701-430f-b580-8ccbef7fc31b
-# ╟─bbbdd792-6323-4156-b4ac-ab1fcb917696
+# ╟─9c2ae121-bfbd-4234-b7ad-9d12eb34905b
+# ╟─cc79e245-cac0-478e-8e49-ab57f56dae08
+# ╟─c0cb99b2-5d73-45e3-8492-41b5b2693b02
+# ╟─28dc095e-8757-4baf-9552-dd6f862b290f
+# ╟─73aaa3df-6cc6-4402-afb8-5bb06d6edabc
+# ╠═d4e44913-fda4-440f-8af4-9eeaf3691c12
+# ╠═c5e1d394-2819-11ec-2016-29ccb06f108c
+# ╟─edb43234-6b58-4611-b2ae-55ff788214c8
+# ╠═63ace2af-1cea-4e67-a1ce-5038a348dff8
+# ╟─259d7583-d3fc-4ebe-b2ae-9aa12327bdf8
+# ╠═db7afe73-f823-4886-9cfb-b94c72f5c700
+# ╟─369ce603-e36d-44cc-a9c2-ceebe162861e
+# ╟─f9a53eb7-dac6-42f2-9e97-6ec61bd3d3c2
+# ╠═2f4681ec-ac9e-457a-aa47-f252de7e8c6f
+# ╟─cd58c856-6bb7-457d-910f-e053d6990e8d
+# ╟─0cfb2e73-54b1-4c17-a37a-91c2f9ed7688
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
