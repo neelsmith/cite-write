@@ -14,12 +14,12 @@ using CitableText, CitableCorpus, Orthography, CitableParserBuilder
 corpus = begin
 	using HTTP
 	corpusurl = "https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex"
-	HTTP.get(corpusurl).body |> String |> corpus_fromcex
+	HTTP.get(corpusurl).body |>  String |> corpus_fromcex
 end
 
 # ╔═╡ 2bb950e9-77c7-4449-841e-4136b409bb68
 md"""
-- *Notebook version*:  **prerelease**
+- *Notebook version*:  **prerelease-1**
 - *New module*: `CitableCorpusAnalysis`
 """
 
@@ -27,6 +27,11 @@ md"""
 md"""# Analyzing a citable corpus
 
 
+"""
+
+# ╔═╡ 7cde8d93-7ce1-419f-ae5f-9aa44d079b44
+md"""
+## Building an analytical corpus
 """
 
 # ╔═╡ 5bb71d87-a7c2-4d91-8250-5a3571780726
@@ -40,6 +45,36 @@ acorpus = AnalyticalCorpus(corpus, ortho, parser)
 
 # ╔═╡ 13953596-b517-4096-b378-9887a3c6c95f
 analyzecorpus(acorpus, parser.data)
+
+# ╔═╡ 122447b4-2ae6-4738-a093-77ef30fc5130
+md"""
+## Profiling a corpus 
+"""
+
+# ╔═╡ d74b8097-3dd0-46cd-82c0-2ce8906cfa70
+md"""
+## Interoperating with the Julia `TextAnalysis.Corpus` 
+"""
+
+# ╔═╡ 370d95a2-3f7f-4b27-a327-ffacd9f8ec7a
+md"""
+---
+"""
+
+# ╔═╡ 45d45fb1-ec23-4906-b1c5-36067211ef1b
+css = html"""<style>
+pluto-notebook {
+  counter-reset: section;
+}
+pluto-notebook h2 {
+  counter-reset: subsection;
+}
+pluto-notebook h2:before {
+  counter-increment: section;
+  content: "" counter(section) ". ";
+}
+
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -689,10 +724,15 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─88682e5a-2767-11ec-3b09-fd6d7e041bc0
 # ╠═0bcf5e96-0533-4120-8607-dec92dda12dc
 # ╠═e161eaad-2a14-4971-b0fd-7d48966c2b61
+# ╟─7cde8d93-7ce1-419f-ae5f-9aa44d079b44
 # ╠═59e146a2-8212-4623-903f-cf8fe3de2cc2
 # ╠═5bb71d87-a7c2-4d91-8250-5a3571780726
 # ╠═01392197-ea77-491e-b634-b0c9cc25e951
 # ╠═186faef8-d2be-473d-a8d7-53c7bcaf0469
 # ╠═13953596-b517-4096-b378-9887a3c6c95f
+# ╟─122447b4-2ae6-4738-a093-77ef30fc5130
+# ╟─d74b8097-3dd0-46cd-82c0-2ce8906cfa70
+# ╟─370d95a2-3f7f-4b27-a327-ffacd9f8ec7a
+# ╟─45d45fb1-ec23-4906-b1c5-36067211ef1b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
