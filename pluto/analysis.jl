@@ -14,12 +14,12 @@ using CitableText, CitableCorpus, Orthography, CitableParserBuilder
 corpus = begin
 	using HTTP
 	corpusurl = "https://raw.githubusercontent.com/cite-architecture/CitableCorpus.jl/main/docs/data/gettysburgcorpus.cex"
-	HTTP.get(corpusurl).body |>  String |> corpus_fromcex
+	HTTP.get(corpusurl).body |> corpus_fromcex
 end
 
 # ╔═╡ 2bb950e9-77c7-4449-841e-4136b409bb68
 md"""
-- *Notebook version*:  **prerelease-1**
+- *Notebook version*:  **prerelease-2**
 - *New module*: `CitableCorpusAnalysis`
 """
 
@@ -27,11 +27,25 @@ md"""
 md"""# Analyzing a citable corpus
 
 
+The `CitableCorpusAnalysis` module uses a specified orthographic system and a specified parser to analyze a citable corpus. 
+
+- see the [module's documentation](https://neelsmith.github.io/CitableCorpusAnalysis.jl/stable/)
+
+"""
+
+# ╔═╡ ff5d7188-0d6c-4137-a94e-60515bb8dec0
+md"""
+In this notebook, we'll use a simple ASCII orthography defined in the `Orthography` module, and a parser defined in the `CitableParserBuilder` module.  In addition, we'll need the modules for working with citable text corpora using CTS URNs.
 """
 
 # ╔═╡ 7cde8d93-7ce1-419f-ae5f-9aa44d079b44
 md"""
 ## Building an analytical corpus
+"""
+
+# ╔═╡ c61e339b-51af-42c3-8078-557c5eb1259d
+md"""
+We'll start by loading a citable corpus of the five extant versions of the Gettysburg Address from a URL, and instantiating an orthography and parser to apply to our corpus.
 """
 
 # ╔═╡ 5bb71d87-a7c2-4d91-8250-5a3571780726
@@ -40,11 +54,44 @@ ortho = simpleAscii()
 # ╔═╡ 01392197-ea77-491e-b634-b0c9cc25e951
 parser = CitableParserBuilder.gettysburgParser()
 
+# ╔═╡ 8c08de24-9c33-41a5-9092-03fee68896e3
+md"""
+We use all three of those objects to create an `AnalyticalCorpus`.
+"""
+
 # ╔═╡ 186faef8-d2be-473d-a8d7-53c7bcaf0469
 acorpus = AnalyticalCorpus(corpus, ortho, parser)
 
+# ╔═╡ 99e0dc5e-9e90-43aa-ba04-3641f3f2e41a
+md"""
+## Parsing a corpus
+"""
+
+# ╔═╡ 59a05d7e-b634-48a7-8bca-3dd8b3e5b15b
+md"""
+
+The `analyzecorpus` creates a tokenized corpus from the source corpus, and parses all passages in the tokenized corpus.  It has two methods:
+
+- `analyzecorpus(corpus)`
+- `analyzecorpus(corpus, optionaldata)`
+
+The parser we've chosen uses the second form.
+"""
+
 # ╔═╡ 13953596-b517-4096-b378-9887a3c6c95f
-analyzecorpus(acorpus, parser.data)
+analyzed_passages = analyzecorpus(acorpus, parser.data)
+
+# ╔═╡ db0d733a-718c-4105-8adc-243636564815
+md"""
+
+The result is a Vector `AnalyzedToken`s, a structure from the `CitableParserBuilder` module.  Each `AnalyzedToken` contains a citable passage in the tokenized edition, and a (possibly empty) Vector of analyses for that token.
+"""
+
+# ╔═╡ a211305b-0442-4a2f-8345-f7bb76136010
+analyzed_passages[1].passage
+
+# ╔═╡ b41b70a8-df26-4b44-b620-95781b87a0e4
+analyzed_passages[1].analyses
 
 # ╔═╡ 122447b4-2ae6-4738-a093-77ef30fc5130
 md"""
@@ -87,7 +134,7 @@ HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 Orthography = "0b4c9448-09b0-4e78-95ea-3eb3328be36d"
 
 [compat]
-CitableCorpus = "~0.6.0"
+CitableCorpus = "~0.6.1"
 CitableCorpusAnalysis = "~0.4.2"
 CitableParserBuilder = "~0.15.2"
 CitableText = "~0.11.0"
@@ -145,9 +192,9 @@ version = "3.0.1"
 
 [[CitableCorpus]]
 deps = ["CitableBase", "CitableText", "CiteEXchange", "DataFrames", "DocStringExtensions", "Documenter", "HTTP", "Test"]
-git-tree-sha1 = "0d582e36ccbc0e4b6c784aceec1ac484cc89f171"
+git-tree-sha1 = "af6433e52df63d9086c136b4c2f79cc4e3df8cc8"
 uuid = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
-version = "0.6.0"
+version = "0.6.1"
 
 [[CitableCorpusAnalysis]]
 deps = ["CSV", "CitableCorpus", "CitableParserBuilder", "CitableText", "Conda", "DocStringExtensions", "Documenter", "HTTP", "Orthography", "PyCall", "Test", "TextAnalysis", "TopicModelsVB"]
@@ -723,13 +770,21 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─2bb950e9-77c7-4449-841e-4136b409bb68
 # ╟─88682e5a-2767-11ec-3b09-fd6d7e041bc0
 # ╠═0bcf5e96-0533-4120-8607-dec92dda12dc
+# ╟─ff5d7188-0d6c-4137-a94e-60515bb8dec0
 # ╠═e161eaad-2a14-4971-b0fd-7d48966c2b61
 # ╟─7cde8d93-7ce1-419f-ae5f-9aa44d079b44
-# ╠═59e146a2-8212-4623-903f-cf8fe3de2cc2
+# ╟─c61e339b-51af-42c3-8078-557c5eb1259d
+# ╟─59e146a2-8212-4623-903f-cf8fe3de2cc2
 # ╠═5bb71d87-a7c2-4d91-8250-5a3571780726
 # ╠═01392197-ea77-491e-b634-b0c9cc25e951
+# ╟─8c08de24-9c33-41a5-9092-03fee68896e3
 # ╠═186faef8-d2be-473d-a8d7-53c7bcaf0469
+# ╟─99e0dc5e-9e90-43aa-ba04-3641f3f2e41a
+# ╟─59a05d7e-b634-48a7-8bca-3dd8b3e5b15b
 # ╠═13953596-b517-4096-b378-9887a3c6c95f
+# ╟─db0d733a-718c-4105-8adc-243636564815
+# ╠═a211305b-0442-4a2f-8345-f7bb76136010
+# ╠═b41b70a8-df26-4b44-b620-95781b87a0e4
 # ╟─122447b4-2ae6-4738-a093-77ef30fc5130
 # ╟─d74b8097-3dd0-46cd-82c0-2ce8906cfa70
 # ╟─370d95a2-3f7f-4b27-a327-ffacd9f8ec7a
