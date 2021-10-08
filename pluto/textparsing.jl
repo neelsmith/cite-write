@@ -12,7 +12,7 @@ using CitableText, CitableCorpus
 
 # ╔═╡ 364303fd-6a9a-4ecd-a503-ffb09caffd5c
 md"""
-- *Notebook version*:  **1.0.0**
+- *Notebook version*:  **1.0.1**
 - *New module*: `CitableParserBuilder`
 """
 
@@ -22,25 +22,25 @@ md"""
 
 The `CitableParserBuilder` module defines:
 
-1. a structure for citable analyses of a text token of some kind
-2. functions for parsing citable text content.
+1. a structure for citable analyses of a text token of some kind (the `Analysis` structure)
+2. abstractions for a parser (the `CitableParser`) implementing functions for parsing citable text content
 
 
-Since every parser is specific to the language and orthography of the corpus it is designed to analyze, you should consult documentation (and, soon, additional Pluto notebooks) for parsers built with this module:
+Since every parser is specific to the language and orthography of the corpus it is designed to analyze, you should consult documentation (and, at some point, additional Pluto notebooks  on this site) for parsers built with the `CitableParserBuilder` module:
 
 - Kanones.jl
 - Tabulae.jl
 - Lycian.jl
 
 
-In this notebook, we'll use a sample parser that is included in the `CitableParserBuilder` module, and built to parse a corpus of all the known texts of Lincoln's Gettysburg Address.  It identifies the form of tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
+In this notebook, we'll use a sample parser that is included in the `CitableParserBuilder` module. It is designed to parse a corpus of all the known texts of Lincoln's Gettysburg Address, and identifies the form of tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
 
 
 """
 
 # ╔═╡ b64a1672-3eb0-4833-ba36-c92be99b6cf1
 md"""
-##  1. Citable analyses: the `Analysis` structure
+##  Citable analyses: the `Analysis` structure
 
 Although analyzing a chunk of a citable text is a broadly generalizable concept, the `CitableParserBuilder` module was designed with morphological parsing in mind, and the structure of the `Analysis` type reflects that.  Each analysis identifies:
 
@@ -49,34 +49,39 @@ Although analyzing a chunk of a citable text is a broadly generalizable concept,
 3. a *stem* 
 4. an *inflectional rule*
 
-Each item is identified by a URN.  The easiest way to illustrate this will be to examine output of the parsing functions in the following cells.
+Each item is identified by a URN.  The easiest way to illustrate this will be to examine output of the parsing functions in the following section.
 
 """
 
 # ╔═╡ ca514879-6a33-4e69-82c1-e3a5f12d6504
 md"""
 
-> Add a note here to checkout the notebook about abbreviated URNs
+> **NB**: by default, the `CitableParser`'s parsing functions work with abbreviated forms of CITE2 URNs.  See the notebook `abbruns.html` on this site for an introduction to their usage, including how to convert to and from full CITE2 URNs.
 """
 
 # ╔═╡ 1fdccae5-d118-4286-8e93-c596756c9a64
 md"""
 
-## 2. Parsing text content
+## Parsing text strings
 
 
-> Add a note here on the `CitableCorpusAnalysis` module
+
 
 Implementations of the `CitableParser` abstraction can parse string values from a variety of sources, as well as parse citable passages of text, and an entire tokenized corpus.
 
 
 """
 
-# ╔═╡ f91718c0-1234-405f-842c-c8fe2a075ae2
-gburgparser = CitableParserBuilder.gettysburgParser()
+# ╔═╡ d14770ba-7b70-4f13-bde1-b5f62ab4b166
+md"""
+> **NB**:  The `CitableCorpusAnalysis` module  has higher order functions using a `CitableParser` and an `Orthography` to parse entire corpora without preliminary work to tokenize it or construct word lists.  See the `analysis.html` notebook on this site for examples.
+"""
 
 # ╔═╡ d641cfbc-c8a7-4d9a-8869-d1216f35b3a9
-md"We can verify that this is a subtype of the `CitableParser`."
+md"We can instantiate our simple parser, and verify that this is a subtype of the `CitableParser`."
+
+# ╔═╡ f91718c0-1234-405f-842c-c8fe2a075ae2
+gburgparser = CitableParserBuilder.gettysburgParser()
 
 # ╔═╡ 2bc1399e-a62d-4b5b-aba7-0bfead30d942
 typeof(gburgparser) |> supertype
@@ -125,16 +130,33 @@ There is a parallel `parsewordlist` function.  Its output will be a Vector conta
 parsewordlist(gburgparser, split("Four score and seven years ago"), gburgparser.data)
 
 # ╔═╡ e5bbe44e-0d01-4222-b9bc-d885721330d5
-md"""### Citable content
+md"""## Parsing citable texts
 
 If you have a citable passage representing a single token, or a tokenized corpus, you can use the `parsepassage` or `parsecorpus` functions, respectively.
 
+"""
+
+# ╔═╡ 1f0d4c15-e7c3-4c27-965d-f4afbff3b540
+md"""
+
+> **NB**: you can build a tokenized corpus using the `Orthography` module.  See the `ortho.html` notebook on this site for examples.
+"""
+
+# ╔═╡ 262c12aa-a9e3-458d-88c7-3ec50c80b85a
+md"""
 
 To work with citable texts, we'll import the modules to work with CTS URNs and citable text structures along with the `CitableParserBuilder` module.
 """
 
 # ╔═╡ eaf3182e-09c0-442b-8a92-b7c83bb8b4ac
 tokenurn = CtsUrn("urn:cts:citedemo:gburg.bancroft.v2:1.2")
+
+# ╔═╡ 44bb9c93-f302-4598-a812-0058c2e4fd08
+md"""
+The next cells manually create a citable text passage containing a single token, and parse it.
+
+Notice that the result is a new type of object: an `AnalyzedToken`.
+"""
 
 # ╔═╡ b3b0802b-acce-4de0-9dac-0c31601c4af6
 tokenpassage = CitablePassage(tokenurn, "score")
@@ -143,7 +165,7 @@ tokenpassage = CitablePassage(tokenurn, "score")
 passage_analysis = parsepassage(gburgparser, tokenpassage, gburgparser.data)
 
 # ╔═╡ 3713c2d0-0d36-4171-8677-f59bd686e1d6
-md"""Notice that the result is new type of object: an `AnalyzedToken`.
+md"""
 
 The `AnalyzedToken` associates the original citable token, which uniquely identifies a single token in a concrete text, with the Vector of analyses resulting from parsing the passage's text content.
 """
@@ -164,6 +186,25 @@ The `analyses` member is equivalent to the output of parsing the string content 
 
 # ╔═╡ f659ce21-8eae-4a6d-a20e-79d19c6361d6
 passage_analysis.analyses == scoreparses
+
+# ╔═╡ c96aabd3-f23e-4b98-8f11-4bab70ab73f2
+md"""
+---
+"""
+
+# ╔═╡ 4ae10cca-e950-4389-9cdd-02b45aee5063
+css = html"""<style>
+pluto-notebook {
+  counter-reset: section;
+}
+pluto-notebook h2 {
+  counter-reset: subsection;
+}
+pluto-notebook h2:before {
+  counter-increment: section;
+  content: "" counter(section) ". ";
+}
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -611,8 +652,9 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─b64a1672-3eb0-4833-ba36-c92be99b6cf1
 # ╟─ca514879-6a33-4e69-82c1-e3a5f12d6504
 # ╟─1fdccae5-d118-4286-8e93-c596756c9a64
-# ╠═f91718c0-1234-405f-842c-c8fe2a075ae2
+# ╟─d14770ba-7b70-4f13-bde1-b5f62ab4b166
 # ╟─d641cfbc-c8a7-4d9a-8869-d1216f35b3a9
+# ╠═f91718c0-1234-405f-842c-c8fe2a075ae2
 # ╠═2bc1399e-a62d-4b5b-aba7-0bfead30d942
 # ╟─26fb46fe-2b87-4926-8442-08627de72d48
 # ╠═81ffd853-3ff4-464b-87c1-12e2ae901f88
@@ -625,8 +667,11 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─259050ae-e7a3-41aa-a118-6dc3da6d93ab
 # ╠═98f93bd5-6177-430f-90bc-6b99eb51ab3e
 # ╟─e5bbe44e-0d01-4222-b9bc-d885721330d5
+# ╟─1f0d4c15-e7c3-4c27-965d-f4afbff3b540
+# ╟─262c12aa-a9e3-458d-88c7-3ec50c80b85a
 # ╠═076d709c-3f21-471d-88ba-c8d6aeb2bb6f
 # ╠═eaf3182e-09c0-442b-8a92-b7c83bb8b4ac
+# ╟─44bb9c93-f302-4598-a812-0058c2e4fd08
 # ╠═b3b0802b-acce-4de0-9dac-0c31601c4af6
 # ╠═4fe55206-c347-4a76-96a3-336b9a85d24e
 # ╟─3713c2d0-0d36-4171-8677-f59bd686e1d6
@@ -635,5 +680,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═ffe81e62-8b97-44b9-b4a5-d86967c69551
 # ╟─087dba00-76a5-40ae-8d9f-f1ee7c91df05
 # ╠═f659ce21-8eae-4a6d-a20e-79d19c6361d6
+# ╟─c96aabd3-f23e-4b98-8f11-4bab70ab73f2
+# ╟─4ae10cca-e950-4389-9cdd-02b45aee5063
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
