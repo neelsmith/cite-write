@@ -68,8 +68,12 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 ## Documentation
 
-Modules listed alphabetically:
 
+
+Links to documentation for modules discussed here, listed alphabetically:
+
+
+- the [`AtticGreek` module](https://neelsmith.github.io/AtticGreek.jl/stable/)
 - the [`CitableBase` module](https://cite-architecture.github.io/CitableBase.jl/stable/)
 - the [`CitableCollection` module](https://cite-architecture.github.io/CitableCollection.jl/stable/)
 - the [`CitableCorpus` module](https://cite-architecture.github.io/CitableCorpus.jl/stable/)
@@ -85,5 +89,7 @@ Modules listed alphabetically:
 - the [`HmtArchive` module](https://homermultitext.github.io/HmtArchive.jl/stable/)
 - the `Kanones` module (not yet published: work in progress at [this github repository](https://github.com/neelsmith/Kanones.jl))
 - the [`Lycian` module](https://neelsmith.github.io/Lycian.jl/stable/)
+- the [`ManuscriptOrthography` module](https://homermultitext.github.io/ManuscriptOrthography.jl/stable/)
 - the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/)
+- the [`PolytonicGreek` module](https://neelsmith.github.io/PolytonicGreek.jl/stable/)
 - the [`Tabulae` module](https://neelsmith.github.io/Tabulae.jl/stable/)
