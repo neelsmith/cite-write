@@ -18,7 +18,7 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 #### Generally applicable modules
 
-- using the `CitableText` module to work with [CTS URNs](./cts-urns.html)
+- using the `CitableText` module to work with [CTS URNs](./cts-urns.html) (version *1.0.1*)
 - using the `CitableCorpus` module: [citable text passages, documents and corpora](./texts.html) (version *1.1.0*)
     - (with an aside on [reading CITE data with Julia IO](./julia_io.html)) (version *1.0.0*)
 - using the `Orthography` module to work with explicitly defined [orthographic systems](./ortho.html) (version *1.1.0*)

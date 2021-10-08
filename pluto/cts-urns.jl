@@ -9,8 +9,8 @@ using CitableText, CitableBase
 
 # ╔═╡ 49e6abce-6caf-46e7-862b-d8650de0109b
 md"""
-- *Notebook version*:  **1.0.0**
-- *New module*:  `CitableText`
+- *Notebook version*:  **1.0.1**
+- *New modules*:  `CitableText`, `CitableBase`
 """
 
 # ╔═╡ 3e0a86e4-22b6-11ec-1d3c-b9947d155385
@@ -104,7 +104,7 @@ abstract_phrase_urn =  CtsUrn("urn:cts:citedemo:gburg.hay:2")
 concrete_phrase_urn =  CtsUrn("urn:cts:citedemo:gburg.hay.v2:2")
 
 # ╔═╡ 0113b074-a676-4ab9-8016-855ca7a3f8ad
-md""" ### URN comparison"""
+md""" ## URN comparison"""
 
 # ╔═╡ d86c4838-2b8e-40b7-a83b-aa40d57687a8
 md"Abstract versions of texts contain all concrete versions of that text."
@@ -134,7 +134,7 @@ urncontains(abstract_docurn, concrete_phrase_urn)
 
 # ╔═╡ a135cd36-38be-43b1-903d-28bc2d909dfa
 md"""
-### URN manipulation
+## URN manipulation
 
 The `CitableText` module includes a  number of functions that extract String data from a CTS URN,  or create new CTS URNs by modifying other CTS URNs.
 """
@@ -153,6 +153,26 @@ See the [list of functions here](https://cite-architecture.github.io/CitableText
 # ╔═╡ b7045000-e075-4bf7-8b00-fa005403e8a0
 # Experiment here!
 
+
+# ╔═╡ cacca4b2-e30e-415d-aa60-df5993c41e5f
+md"""
+
+---
+"""
+
+# ╔═╡ 04f8be02-f6b1-47c0-8cbd-23b326e90ac7
+css = html"""<style>
+pluto-notebook {
+  counter-reset: section;
+}
+pluto-notebook h2 {
+  counter-reset: subsection;
+}
+pluto-notebook h2:before {
+  counter-increment: section;
+  content: "" counter(section) ". ";
+}
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -311,5 +331,7 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═6f18299a-6d7f-4636-b4ce-cebce116be8a
 # ╟─be90fc82-5003-4dc2-b565-6fe36ea8e170
 # ╠═b7045000-e075-4bf7-8b00-fa005403e8a0
+# ╟─cacca4b2-e30e-415d-aa60-df5993c41e5f
+# ╟─04f8be02-f6b1-47c0-8cbd-23b326e90ac7
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
