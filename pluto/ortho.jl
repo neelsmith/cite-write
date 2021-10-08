@@ -12,7 +12,7 @@ using CitableCorpus, HTTP
 
 # ╔═╡ 781b1e94-01d6-4339-a71a-5c2e3272b50a
 md"""
-- *Notebook version*: **1.0.0**
+- *Notebook version*: **1.1.0**
 - *New module*: `Orthography`
 """
 
@@ -73,7 +73,6 @@ We'll first parse a simple string of characters.
 # ╔═╡ f97fc422-e28b-4540-9d8b-be8baee6d500
 tokens = tokenize(ortho, sentence)
 
-
 # ╔═╡ 9907c6fd-cc9b-4c36-85ea-076f856f3226
 md"""
 The result is a Vector of `OrthogaphicTokens`.  Each token has two members:  a `text`, and a `tokencategory`.
@@ -107,7 +106,7 @@ md"""
 Next we illustrate:
 
 1. tokenizing the entire corpus
-2. tokenizing a single citable passge in the corpus
+2. tokenizing a single citable passage in the corpus
 3. tokenize a single complete citable document in the corpus
 """
 
@@ -132,31 +131,144 @@ end
 # ╔═╡ 6af33eec-b481-4693-9ccb-887197d4403c
 length(doctokens)
 
-# ╔═╡ 4ca385f5-082b-4466-87a2-219870eb0880
+# ╔═╡ 1ab2af9d-1bff-4d2e-b921-da445901903d
 md"""
-### Other options
+## Surveying the orthography of a corpus
 
-See [this page of the API docs](https://hcmid.github.io/Orthography.jl/stable/guide/corpora/) for more information about:
-
-
-- building a token edition
-- composing a vocabulary list (the set of all tokens' unique text values)
-- computing frequencies of tokens
-- filtering options that can be applied to all of the above listed operations
+Several functions help you analyze the orthography of a corpus.
+"""
 
 
+# ╔═╡ 06e0cf69-bba4-46a3-83b1-4e4b49009a73
+md"""
+### Build a tokenized corpus
+"""
 
+# ╔═╡ 0417ab4d-1986-4e90-a989-90119628a311
+md"""
+You can create a citable tokenized corpus. Each passage extends the original passage citation scheme by one level, and has text content comprising a single token.  
+
+
+Consider the following example.  Here is the text content of the first passage in the source corpus.
+
+"""
+
+# ╔═╡ a60f586b-e715-4cc1-b051-9bc8b70c2ae6
+corpus.passages[1].text
+
+# ╔═╡ b10ecb0b-b6c3-447a-9b04-191efa1677f3
+md"""
+Here is the URN for the same passage."
+"""
+
+# ╔═╡ 79683bfd-9528-4c69-9f8e-3ab12af45acb
+corpus.passages[1].urn
+
+# ╔═╡ 9b2b8ca4-03cf-440c-9264-840ebb56ef22
+md"""
+
+When we create a tokenized corpus from the original corpus, the number of passages in the new tokenized corpus is equal to the number of tokens in the source corpus.
+"""
+
+# ╔═╡ b2adbb09-0ede-423f-a917-ac9fa337290b
+tkncorpus = tokenizedcorpus(ortho, corpus)
+
+# ╔═╡ b1811b88-9fc0-4367-8392-2e7c3b3e4d04
+md"""
+Here are the first four citable passages of the tokenized corpus.
+"""
+
+# ╔═╡ a1b253ae-7cea-4df7-8683-ecee9d88b38a
+tkncorpus.passages[1:4]
+
+# ╔═╡ a772d5a6-dd7c-453e-8712-7178f076bd20
+md"""
+### Index a corpus
+"""
+
+# ╔═╡ 5168fdeb-c5bc-42df-9e2b-a97b97c89651
+md"""
+You can index the corpus to create a dictionary mapping token values (by default, limited to lexical tokens) to their CTS URN in a full tokenized corpus.
+
+"""
+
+# ╔═╡ b29a11f2-85fc-4d77-9386-a35e340dcc40
+index = corpusindex(ortho, corpus)
+
+# ╔═╡ 527ecf62-ecf1-4d9e-8ed8-be86a5b19ce4
+md"""
+In all five versions of the Gettysburg Address in our corpus, the token *seven* is the fourth token in the first section (and appears only there).
+"""
+
+# ╔═╡ 62c3e207-d105-466a-8ef4-a13375d1ffe3
+seven = index["seven"]
+
+# ╔═╡ 80ace939-79a6-4b41-b777-1d893ee3fa4d
+begin
+	using CitableText
+	fullcontext = collapsePassageBy(seven[1], 1)
+	retrieve(fullcontext, corpus)
+end
+
+# ╔═╡ a9f1c1a5-ec66-419b-9366-5136a07af3f9
+md"""
+You can collapse the passage reference one level if you want to retrieve the entire surrounding context from the source edition.
+"""
+
+# ╔═╡ 18c8e609-e63d-4d81-92bc-322c80110e0b
+md"""
+### Count token frequencies
+"""
+
+# ╔═╡ 5c1ddbd1-d9a3-445b-a254-d5a30dbe17c9
+md"""
+The `corpus_histo` function creates an ordered dictionary mapping tokens to frequency counts, sorted in descending order from most frequent to least.
+
+The Gettysburg Address has a lot of commas.
+"""
+
+# ╔═╡ badbabbc-b8e6-45d2-94b3-729bb9e3486e
+ corpus_histo(ortho, corpus)
+
+# ╔═╡ 6417d090-b2ac-460b-9a42-c9014cd9695e
+md"""
+Optionally, you can supply a third parameter to limit the histogram to tokens of a partiular type.  The most frequent lexical token is *that*.
+"""
+
+# ╔═╡ b8fd4c29-068f-4fc1-aa07-176fd13ffdb8
+ corpus_histo(ortho, corpus, LexicalToken())
+
+# ╔═╡ 24b1f096-1ddc-49f2-a826-43956a0352fa
+md"""
+
+---
+"""
+
+# ╔═╡ 927a440e-a988-496e-af57-f972410421a6
+css = html"""<style>
+pluto-notebook {
+  counter-reset: section;
+}
+pluto-notebook h2 {
+  counter-reset: subsection;
+}
+pluto-notebook h2:before {
+  counter-increment: section;
+  content: "" counter(section) ". ";
+}
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
+CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 Orthography = "0b4c9448-09b0-4e78-95ea-3eb3328be36d"
 
 [compat]
 CitableCorpus = "~0.6.0"
+CitableText = "~0.11.0"
 HTTP = "~0.9.16"
 Orthography = "~0.13.0"
 """
@@ -598,7 +710,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─2e84aa9c-85c4-41fe-96db-c1e4ca4241aa
 # ╠═ae2b0b72-3d4d-49a5-b26e-a85dd1e00f9a
 # ╟─91f2a020-2514-11ec-0952-ad0932acd652
-# ╟─abc7db81-d566-4e75-b55d-b3e399e16fd3
+# ╠═abc7db81-d566-4e75-b55d-b3e399e16fd3
 # ╟─6175cbb4-b833-4965-b01d-8a2dbceb5d2e
 # ╠═a68ec67f-ad71-4399-8b31-72455611023e
 # ╠═295b913c-cae0-450d-ae31-0466b0e1d556
@@ -606,6 +718,29 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═77991366-4377-4044-b307-1efb3f85c9c7
 # ╠═75cfa577-404b-4435-a437-8562646e7e07
 # ╠═6af33eec-b481-4693-9ccb-887197d4403c
-# ╟─4ca385f5-082b-4466-87a2-219870eb0880
+# ╟─1ab2af9d-1bff-4d2e-b921-da445901903d
+# ╟─06e0cf69-bba4-46a3-83b1-4e4b49009a73
+# ╟─0417ab4d-1986-4e90-a989-90119628a311
+# ╠═a60f586b-e715-4cc1-b051-9bc8b70c2ae6
+# ╟─b10ecb0b-b6c3-447a-9b04-191efa1677f3
+# ╠═79683bfd-9528-4c69-9f8e-3ab12af45acb
+# ╟─9b2b8ca4-03cf-440c-9264-840ebb56ef22
+# ╠═b2adbb09-0ede-423f-a917-ac9fa337290b
+# ╟─b1811b88-9fc0-4367-8392-2e7c3b3e4d04
+# ╠═a1b253ae-7cea-4df7-8683-ecee9d88b38a
+# ╟─a772d5a6-dd7c-453e-8712-7178f076bd20
+# ╟─5168fdeb-c5bc-42df-9e2b-a97b97c89651
+# ╠═b29a11f2-85fc-4d77-9386-a35e340dcc40
+# ╟─527ecf62-ecf1-4d9e-8ed8-be86a5b19ce4
+# ╠═62c3e207-d105-466a-8ef4-a13375d1ffe3
+# ╟─a9f1c1a5-ec66-419b-9366-5136a07af3f9
+# ╠═80ace939-79a6-4b41-b777-1d893ee3fa4d
+# ╟─18c8e609-e63d-4d81-92bc-322c80110e0b
+# ╟─5c1ddbd1-d9a3-445b-a254-d5a30dbe17c9
+# ╠═badbabbc-b8e6-45d2-94b3-729bb9e3486e
+# ╟─6417d090-b2ac-460b-9a42-c9014cd9695e
+# ╠═b8fd4c29-068f-4fc1-aa07-176fd13ffdb8
+# ╟─24b1f096-1ddc-49f2-a826-43956a0352fa
+# ╟─927a440e-a988-496e-af57-f972410421a6
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
