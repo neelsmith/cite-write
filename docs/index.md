@@ -86,7 +86,7 @@ Links to documentation for modules discussed here, listed alphabetically:
 - the [`CitableText` module](https://cite-architecture.github.io/CitableText.jl/stable/) ([github](https://github.com/cite-architecture/CitableText.jl))
 - the [`EditionBuilders` module](https://hcmid.github.io/EditionBuilders.jl/stable/) ([github](https://github.com/HCMID/EditionBuilders.jl))
 - the [`EditorsRepo` module](https://hcmid.github.io/EditorsRepo.jl/stable/) ([github](https://github.com/HCMID/EditorsRepo.jl))
-- the [`HmtArchive` module](https://homermultitext.github.io/HmtArchive.jl/stable/)
+- the [`HmtArchive` module](https://homermultitext.github.io/HmtArchive.jl/stable/) ([github](https://github.com/homermultitext/HmtArchive.jl))
 - the `Kanones` module (not yet published: work in progress at [this github repository](https://github.com/neelsmith/Kanones.jl))
 - the [`Lycian` module](https://neelsmith.github.io/Lycian.jl/stable/) ([github](https://github.com/neelsmith/Lycian.jl))
 - the [`ManuscriptOrthography` module](https://homermultitext.github.io/ManuscriptOrthography.jl/stable/) ([github](https://github.com/homermultitext/ManuscriptOrthography.jl))
