@@ -92,4 +92,4 @@ Links to documentation for modules discussed here, listed alphabetically:
 - the [`ManuscriptOrthography` module](https://homermultitext.github.io/ManuscriptOrthography.jl/stable/) ([github](https://github.com/homermultitext/ManuscriptOrthography.jl))
 - the [`Orthography` module](https://hcmid.github.io/Orthography.jl/stable/) ([github](https://github.com/HCMID/Orthography.jl))
 - the [`PolytonicGreek` module](https://neelsmith.github.io/PolytonicGreek.jl/stable/) ([github](https://github.com/neelsmith/PolytonicGreek.jl))
-- the [`Tabulae` module](https://neelsmith.github.io/Tabulae.jl/stable/)
+- the [`Tabulae` module](https://neelsmith.github.io/Tabulae.jl/stable/) ([github](https://github.com/neelsmith/Tabulae.jl/actions))
