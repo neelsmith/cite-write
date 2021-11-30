@@ -15,5 +15,5 @@ A hands-on introduction to working with the CITE architecture in Julia.
 
 ![Modules graph](./modules-tikz.png)
 
-- see examples in Pluto notebooks
-- see documentation
+- see examples in [Pluto notebooks](./notebooks)
+- see [documentation](./documentation)
