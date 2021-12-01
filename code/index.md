@@ -1,8 +1,10 @@
 # Code
 
-![Color key](./colorkey.png)
+(Images are linked to full-sized versions.)
 
-![Modules graph](./modules-tikz.png)
+[![Color key](./colorkey.png)](./colorkey.png)
+
+[![Modules graph](./modules-tikz.png)](./modules-tikz.png)
 
 - see examples in [Pluto notebooks](./notebooks/)
 - see [documentation](./docstrings/)
