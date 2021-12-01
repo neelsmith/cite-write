@@ -2,7 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>https://neelsmith.github.io/cite-write/code/index.html</loc>
+    <loc>https://neelsmith.github.io/cite-write/narrative/citation/cite2urn/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/cite-write/narrative/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/cite-write/narrative/citables/texts/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/cite-write/narrative/citables/index.html</loc>
     <lastmod>2021-12-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -26,13 +44,31 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://neelsmith.github.io/cite-write/narrative/index.html</loc>
+    <loc>https://neelsmith.github.io/cite-write/code/docstrings/index.html</loc>
     <lastmod>2021-12-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://neelsmith.github.io/cite-write/code/docstrings/index.html</loc>
+    <loc>https://neelsmith.github.io/cite-write/narrative/collections/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/cite-write/narrative/citation/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/cite-write/code/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/cite-write/narrative/citation/ctsurn/index.html</loc>
     <lastmod>2021-12-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
