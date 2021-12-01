@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/404/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/narrative/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/docstrings/index.html</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/julia_io/</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/cts-urns/</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/textparsing/</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/texts/</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/ortho/</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/abbrurns/</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://neelsmith.github.io/DigitalGreek/code/notebooks/analysis/</loc>
+    <lastmod>2021-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+</urlset>
