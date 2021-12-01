@@ -31,3 +31,7 @@ The fluidity of digital content presents some challenges to a digital translatio
 
 
 Identifiers must be *canonical* -- that is, they must follow some reference scheme more or less widely agreed upon by scholars working with the material.  They must be *permanent* and *immutable* so that they can be used by future scholars.  
+
+
+
+TBA
