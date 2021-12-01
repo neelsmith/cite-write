@@ -28,3 +28,5 @@ For instance:
 -->
 \newcommand{\R}{\mathbb R}
 \newcommand{\scal}[1]{\langle #1 \rangle}
+
+\newcommand{\badge}[2]{~~~<a href="#2"><span class="badge"><img src="#1"/></a></span>~~~}
