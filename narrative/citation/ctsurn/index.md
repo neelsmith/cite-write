@@ -11,4 +11,9 @@ nav_order = 1
 
 ## TL;DR
 
-The `CitableTet` package defines the `CtsUrn` type.
+The `CitableText` package defines the `CtsUrn` type.
+
+
+## Notebooks
+
+- experiment with [`CtsUrn`s](/code/notebooks/cts-urns/)
