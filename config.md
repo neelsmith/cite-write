@@ -3,15 +3,15 @@ Add here global page variables to use throughout your
 website.
 The website_* must be defined for the RSS to work
 -->
-@def website_title = "Digital Greek"
-@def website_descr = "Working with Greek texts in the twenty-first century"
-@def website_url   = "https://neelsmith.github.io/DigitalGreek/"
+@def website_title = "Citable scholarly work in Julia"
+@def website_descr = "Concepts and implementation in Julia"
+@def website_url   = "https://neelsmith.github.io/cite-write/"
 
 @def author = "Neel Smith"
 
 @def mintoclevel = 2
 
-@def prepath = "DigitalGreek"
+@def prepath = "cite-write"
 
 <!--
 Add here files or directories that should be ignored by Franklin, otherwise
