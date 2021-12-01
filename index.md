@@ -2,9 +2,6 @@
 title = "The CITE architecture"
 +++
 
-Explore links:
-
-[root](/)
 
 # Citable scholarly work in Julia
 

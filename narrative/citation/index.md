@@ -6,13 +6,14 @@ nav_order = 1
 
 # Citation
 
+**Contents** \toc
 
 ## TL;DR
 
 - Uniform Resource Names (URNs) are an IETF standard that lets us implement permanent, immutable canonical identifiers.
 - The `CitableBase` package defines an abstract `Urn` type, and functions for comparing URNs for *equality*, *containment* and *similarity*.
 
-## Explanation 
+## Discussion 
 
 > Scholarly resources are identified by permanent, immutable canonical identifiers.
 
@@ -35,3 +36,38 @@ Identifiers must be *canonical* -- that is, they must follow some reference sche
 
 
 TBA
+
+## Implementation
+
+Illustrating how to implement a subtype of `Urn`.
+
+```julia:./code/citation1
+using CitableBase
+struct MyIsbn 
+    isbnstr::AbstractString
+end
+example =  MyIsbn("urn:isbn:022661283X")
+@show example.isbnstr
+```
+\output{./code/citation1}
+
+Urn equality is implemented in `CitableBase`.
+
+```julia:./code/citation2
+example2 = MyIsbn(example.isbnstr)
+@show example == example2
+```
+\output{./code/citation2}
+
+You need to define containment and similarity depending on the logic of your URN type. For this ISBN type, we'll count "containment" to mean equality.
+
+
+```julia:./code/citation3
+import CitableBase: urncontains
+
+function urncontains(u1::MyIsbn, u2::MyIsbn)
+    u1 == u2
+end
+@show urncontains(example, example2)
+```
+\output{./code/citation3}
