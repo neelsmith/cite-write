@@ -2,6 +2,10 @@
 title = "The CITE architecture"
 +++
 
+Explore links:
+
+[root](/)
+
 # Citable scholarly work in Julia
 
 An introduction to the CITE architecture, with hands-on applications in Julia.
