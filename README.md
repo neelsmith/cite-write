@@ -1,3 +1,5 @@
 # cite-write
 
-Writing with working examples about the CITE architecture and an implementation of its concepts in Julia.
+An introduction to the central concepts of the CITE architecture, illustrated by implementations in Julia.
+
+<https://neelsmith.github.io/cite-write/>
