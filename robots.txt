@@ -1,4 +1,4 @@
-Sitemap: https://neelsmith.github.io/DigitalGreek/sitemap.xml
+Sitemap: https://neelsmith.github.io/cite-write/sitemap.xml
 
 User-agent: *
 Disallow:
